@@ -1,4 +1,12 @@
 # gorilla-cast
+A sample Podcast application made with Vue.js.
+
+## Requirements
+
+|  app/pkg  |  version  |
+|:---------:|:---------:|
+|   Node    |  v12.16.0 |
+|   NPM     |  v6.13.4  |
 
 ## Project setup
 ```

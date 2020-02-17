@@ -1,6 +1,7 @@
 {
   "name": "gorilla-cast",
   "version": "0.1.0",
+  "description": "A sample Podcast application made with Vue.js.",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -62,5 +63,8 @@
   ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest"
+  },
+  "engines": {
+    "node": ">=12.16.0"
   }
 }
