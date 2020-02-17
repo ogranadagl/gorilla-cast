@@ -1,32 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="root-app">
+    <menu-drawer></menu-drawer>
+    <app-bar></app-bar>
+
+    <v-content>
+      <router-view />
+    </v-content>
+
+    <v-footer app>
+      <app-player></app-player>
+    </v-footer>
+
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import MenuDrawer from '@/components/menu-drawer/menu-drawer.vue';
+import AppBar from '@/components/app-bar/app-bar.vue';
+import AppPlayer from '@/components/app-player/app-player.vue';
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+export default {
+  components: {
+    MenuDrawer,
+    AppBar,
+    AppPlayer,
+  },
+  data: () => ({
+    drawer: null,
+  }),
+  created() {
+    this.$vuetify.theme.dark = true;
+  },
+};
+</script>
