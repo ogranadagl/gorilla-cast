@@ -1,29 +1,13 @@
 <template>
-  <v-app id="root-app">
-    <menu-drawer></menu-drawer>
-    <app-bar></app-bar>
-
-    <v-content>
-      <router-view />
-    </v-content>
-
-    <v-footer app>
-      <app-player></app-player>
-    </v-footer>
-
-  </v-app>
+  <main-layout></main-layout>
 </template>
 
 <script>
-import MenuDrawer from '@/components/menu-drawer/menu-drawer.vue';
-import AppBar from '@/components/app-bar/app-bar.vue';
-import AppPlayer from '@/components/app-player/app-player.vue';
+import MainLayout from '@/layouts/main-layout.vue';
 
 export default {
   components: {
-    MenuDrawer,
-    AppBar,
-    AppPlayer,
+    MainLayout,
   },
   data: () => ({
     drawer: null,
