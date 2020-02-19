@@ -1,4 +1,5 @@
 import SearchInput from '@/components/search-input/search-input.vue';
+import { MESSAGE_PLAY_TRACK, MESSAGE_ADD_FAVORITE, MESSAGE_SEARCH_TRACK } from '@/utils/constants';
 
 export default {
   name: 'ListPodcast',
@@ -13,13 +14,13 @@ export default {
       return `${artistName} -  ${genreName}`;
     },
     searchTrack(track) {
-      this.$emit('search-track', track);
+      this.$emit(MESSAGE_SEARCH_TRACK, track);
     },
-    addFavorite(trackId) {
-      this.$emit('add-favorite', trackId);
+    addFavorite(track) {
+      this.$emit(MESSAGE_ADD_FAVORITE, track);
     },
-    playTrack(trackId) {
-      this.$emit('play-track', trackId);
+    playTrack(track) {
+      this.$root.$emit(MESSAGE_PLAY_TRACK, track);
     },
   },
   props: {
