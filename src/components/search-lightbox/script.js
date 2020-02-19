@@ -1,11 +1,7 @@
-import Search from '@/components/search/search.vue';
 import api from '@/api';
 
 export default {
   name: 'SearchLightbox',
-  components: {
-    Search,
-  },
   data() {
     return {
       dialog: false,
