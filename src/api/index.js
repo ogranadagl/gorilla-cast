@@ -30,14 +30,14 @@ class Api {
   async search(term, isMocked) {
     if (isMocked) {
       console.warn('Search data was mocked!');
-      return searchData;
+      return filter(propEq('isStreamable', true), searchData);
     }
 
     const response = await fetch(
-      `${API_ENDPOINT}/search?media=podcast&entity=podcast&term=${term}`,
+      `${API_ENDPOINT}/search?media=music&term=${term}`,
     );
     const { results } = await response.json();
-    return results;
+    return filter(propEq('isStreamable', true), results);
   }
 
   /**
