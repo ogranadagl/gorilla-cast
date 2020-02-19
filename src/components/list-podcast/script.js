@@ -1,3 +1,5 @@
+import SearchInput from '@/components/search-input/search-input.vue';
+
 export default {
   name: 'ListPodcast',
   data() {
@@ -9,11 +11,21 @@ export default {
     getSubTitle(artistName, genreName) {
       return `${artistName} -  ${genreName}`;
     },
+    searchTrack(track) {
+      this.$emit('search-track', track);
+    },
   },
   props: {
-    podcasts: {
+    list: {
       type: Array,
       default: () => [],
     },
+    listTitle: {
+      type: String,
+      default: 'All Podcasts',
+    },
+  },
+  components: {
+    'search-input': SearchInput,
   },
 };

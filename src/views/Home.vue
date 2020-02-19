@@ -3,7 +3,7 @@
     <div class='home'>
       <img alt='Vue logo' src='../assets/logo.png' />
     </div>
-    <ListPodcast :podcasts="podcasts" />
+    <ListPodcast :list="podcasts" />
   </div>
 </template>
 
