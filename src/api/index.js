@@ -1,16 +1,22 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this, no-console */
 
 import {
   append,
   compose,
   filter,
+  find,
   propEq,
   reject,
   uniq,
 } from 'ramda';
 import uuidv4 from 'uuid/v4';
 
-import { API_ENDPOINT, KeyNames } from './constants';
+import {
+  API_ENDPOINT,
+  KeyNames,
+  lookupData,
+  searchData,
+} from './constants';
 import { readKey, saveKey, validateEmptyKey } from './utils';
 
 /**
@@ -24,14 +30,38 @@ class Api {
   /**
    * Search podcasts given a term
    * @param  {String} term - Term to search
+   * @param  {Boolean} isMocked - Mock data to avoid API faults
+   * @link https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api#searchexamples
    * @return {Object} results given by API
    */
-  async search(term) {
+  async search(term, isMocked) {
+    if (isMocked) {
+      console.warn('Search data was mocked!');
+      return filter(propEq('isStreamable', true), searchData);
+    }
+
     const response = await fetch(
-      `${API_ENDPOINT}/search?media=podcast&entity=podcast&term=${term}`,
+      `${API_ENDPOINT}/search?media=music&term=${term}`,
     );
     const { results } = await response.json();
-    return results;
+    return filter(propEq('isStreamable', true), results);
+  }
+
+  /**
+   * Lookup request to search for content in the stores based on iTunes
+   * @param  {Int} artistId - id to search
+   * @param  {Boolean} isMocked - Mock data to avoid API faults
+   * @link https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api#lookup
+   * @return {Object} results given by API
+   */
+  async lookup(trackId, isMocked) {
+    if (isMocked) {
+      console.warn('Lookup data was mocked!');
+      return lookupData;
+    }
+    const response = await fetch(`${API_ENDPOINT}/lookup?id=${trackId}`);
+    const { results = [] } = await response.json();
+    return find(propEq('trackId', trackId), results) || {};
   }
 
   /**
