@@ -37,12 +37,8 @@
                 style="width: 60px; display: block; height: 60px; margin-right: 20px;"
               />
               <div>
-                <h1>{{result.collectionName}}</h1>
-                <ul>
-                  <li v-for="genre in result.genres" :key="genre">
-                    <span>{{genre}}</span>
-                  </li>
-                </ul>
+                <h1>{{result.artistName}}</h1>
+                <span>{{result.primaryGenreName}}</span>
               </div>
             </li>
           </ul>
