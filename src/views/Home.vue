@@ -3,7 +3,7 @@
     <div class='home'>
       <img alt='Vue logo' src='../assets/logo.png' />
     </div>
-    <ListPodcast :list="podcasts" />
+    <list-podcast :list="podcasts" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
     };
   },
   components: {
-    ListPodcast,
+    'list-podcast': ListPodcast,
   },
   created() {
     api.search('software').then((res) => {
