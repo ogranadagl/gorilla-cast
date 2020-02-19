@@ -63,7 +63,7 @@ class Api {
 
     return compose(
       saveKey(KeyNames.favorites),
-      reject((favoriteId) => favoriteId !== id),
+      reject((favoriteId) => favoriteId === id),
       this.getFavorites,
     )();
   }
