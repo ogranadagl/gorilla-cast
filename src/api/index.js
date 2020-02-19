@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this, no-console */
 
 import {
   append,
@@ -10,7 +10,7 @@ import {
 } from 'ramda';
 import uuidv4 from 'uuid/v4';
 
-import { API_ENDPOINT, KeyNames } from './constants';
+import { API_ENDPOINT, KeyNames, searchData } from './constants';
 import { readKey, saveKey, validateEmptyKey } from './utils';
 
 /**
@@ -24,9 +24,15 @@ class Api {
   /**
    * Search podcasts given a term
    * @param  {String} term - Term to search
+   * @param  {Boolean} isMocked - Mock data to avoid API faults
    * @return {Object} results given by API
    */
-  async search(term) {
+  async search(term, isMocked) {
+    if (isMocked) {
+      console.warn('Search data was mocked!');
+      return searchData;
+    }
+
     const response = await fetch(
       `${API_ENDPOINT}/search?media=podcast&entity=podcast&term=${term}`,
     );
