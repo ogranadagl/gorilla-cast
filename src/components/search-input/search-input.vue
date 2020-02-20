@@ -3,6 +3,7 @@
     :label="label"
     color="white"
     append-icon="mdi-magnify"
+    class="search-input"
     @change="change"
     @keypress="keypress"
   />
