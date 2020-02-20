@@ -4,7 +4,7 @@
       :change="searchTracks"
       :disabled="loading"
       :loading="dialog"
-      ref="search-input"
+      ref="searchInput"
       solo
     />
     <v-dialog

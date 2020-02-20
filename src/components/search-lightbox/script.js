@@ -29,7 +29,7 @@ export default {
       if (!value) {
         this.loading = false;
         this.results = [];
-        this.$refs['search-input'].reset();
+        this.$refs.searchInput.reset();
       }
     },
   },
