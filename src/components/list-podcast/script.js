@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       selected: false,
+      prefix: 'divider-',
     };
   },
   methods: {
@@ -14,18 +15,24 @@ export default {
     searchTrack(track) {
       this.$emit('search-track', track);
     },
+    addFavorite(trackId) {
+      this.$emit('add-favorite', trackId);
+    },
+    playTrack(trackId) {
+      this.$emit('play-track', trackId);
+    },
   },
   props: {
     list: {
       type: Array,
       default: () => [],
     },
-    listTitle: {
+    title: {
       type: String,
       default: 'All Podcasts',
     },
   },
   components: {
-    'search-input': SearchInput,
+    SearchInput,
   },
 };

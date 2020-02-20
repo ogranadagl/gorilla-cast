@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class='home'>
-      <img alt='Vue logo' src='../assets/logo.png' />
+    <div class="home">
+      <img alt="Vue logo" src="../assets/logo.png" />
     </div>
     <list-podcast :list="podcasts" />
   </div>
@@ -21,7 +21,7 @@ export default {
     };
   },
   components: {
-    'list-podcast': ListPodcast,
+    ListPodcast,
   },
   created() {
     api.search('software').then((res) => {
