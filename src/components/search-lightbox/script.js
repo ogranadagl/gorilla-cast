@@ -18,7 +18,7 @@ export default {
   methods: {
     async searchTracks(term) {
       this.loading = true;
-      const results = await api.search(term, true);
+      const results = await api.search(term);
       this.results = results;
       this.dialog = results.length > 0;
       this.loading = false;
