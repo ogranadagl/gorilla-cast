@@ -1,10 +1,12 @@
 <template>
   <v-text-field
     :label="label"
-    color="white"
-    append-icon="mdi-magnify"
-    @change="change"
+    @change="changeTerm"
     @keypress="keypress"
+    append-icon="mdi-magnify"
+    color="white"
+    ref="field"
+    v-bind="$attrs"
   />
 </template>
 
