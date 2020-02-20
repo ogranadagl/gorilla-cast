@@ -1,19 +1,24 @@
 import api from '@/api';
+import ListPodcast from '@/components/list-podcast/list-podcast.vue';
+import SearchInput from '@/components/search-input/search-input.vue';
 
 export default {
   name: 'SearchLightbox',
+  components: {
+    ListPodcast,
+    SearchInput,
+  },
   data() {
     return {
       dialog: false,
       loading: false,
-      term: null,
       results: [],
     };
   },
   methods: {
-    async search() {
+    async searchTracks(term) {
       this.loading = true;
-      const results = await api.search(this.term);
+      const results = await api.search(term, true);
       this.results = results;
       this.dialog = results.length > 0;
       this.loading = false;
@@ -22,9 +27,9 @@ export default {
   watch: {
     dialog(value) {
       if (!value) {
-        this.results = [];
-        this.term = null;
         this.loading = false;
+        this.results = [];
+        this.$refs['search-input'].reset();
       }
     },
   },
