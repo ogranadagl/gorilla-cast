@@ -31,6 +31,10 @@ export default {
       type: String,
       default: 'All Podcasts',
     },
+    toolbar: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     SearchInput,
