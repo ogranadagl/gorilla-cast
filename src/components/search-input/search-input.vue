@@ -5,9 +5,8 @@
     append-icon="mdi-magnify"
     @change="change"
     @keypress="keypress"
+    hide-details
   />
 </template>
 
 <script src="./script.js"></script>
-
-<style src="./style.css" scoped></style>
