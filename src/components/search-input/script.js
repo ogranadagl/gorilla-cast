@@ -3,20 +3,30 @@ import { sanitizeText } from '@/utils';
 export default {
   name: 'SearchInput',
   methods: {
-    change(term) {
+    changeTerm(term) {
       const parsedTerm = sanitizeText(term);
-      if (parsedTerm) {
-        this.$emit(this.changeEvent, parsedTerm);
+      if (!parsedTerm) {
+        return;
       }
+      if (this.change) {
+        this.change(parsedTerm);
+      }
+      this.$emit(this.changeEvent, parsedTerm);
     },
     keypress(event) {
       this.$emit(this.keypressEvent, event.srcElement.value);
+    },
+    reset() {
+      this.$refs.field.reset();
     },
   },
   props: {
     label: {
       type: String,
       default: 'Search...',
+    },
+    change: {
+      type: Function,
     },
     changeEvent: {
       type: String,
