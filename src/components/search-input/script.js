@@ -3,7 +3,7 @@ import { sanitizeText } from '@/utils';
 export default {
   name: 'SearchInput',
   methods: {
-    change(term) {
+    changeTerm(term) {
       const parsedTerm = sanitizeText(term);
       if (!parsedTerm) {
         return;
@@ -18,6 +18,9 @@ export default {
     label: {
       type: String,
       default: 'Search...',
+    },
+    change: {
+      type: Function,
     },
     changeEvent: {
       type: String,
