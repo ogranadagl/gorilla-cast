@@ -1,10 +1,8 @@
 <template>
   <v-card max-width="500" class="mx-auto">
-    <v-toolbar color="green" dark>
+    <v-toolbar v-show="toolbar" color="green" dark>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
-
       <v-spacer />
-
       <search-input :keypressEvent="'search-track'" @search-track="searchTrack" />
     </v-toolbar>
 
