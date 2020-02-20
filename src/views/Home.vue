@@ -1,23 +1,37 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <div class="home">
+      <img alt="Vue logo" src="../assets/logo.png" />
+    </div>
+    <list-podcast :list="podcasts" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+
+import ListPodcast from '@/components/list-podcast/list-podcast.vue';
+import api from '@/api';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      podcasts: [],
+    };
+  },
   components: {
-    HelloWorld,
+    ListPodcast,
+  },
+  created() {
+    api.search('software').then((res) => {
+      this.podcasts = res;
+    });
   },
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .home {
   text-align: center;
 }
