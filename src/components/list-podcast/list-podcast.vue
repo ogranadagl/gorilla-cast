@@ -39,7 +39,7 @@
         </template>
       </v-list-item-group>
 
-      <v-footer color="success" class="font-weight-medium">
+      <v-footer v-show="footer" color="success" class="font-weight-medium">
         <v-col class="text-right" cols="12">
           <v-btn href="/list" text color="white">{{ moreLabel }}</v-btn>
         </v-col>

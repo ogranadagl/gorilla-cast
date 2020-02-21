@@ -29,7 +29,7 @@
           <span class="headline">Results</span>
         </v-card-title>
         <v-card-text>
-          <list-podcast :list="results" :toolbar="false"/>
+          <list-podcast :list="results" :toolbar="false" :footer="false"/>
         </v-card-text>
       </v-card>
     </v-dialog>
