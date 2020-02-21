@@ -7,9 +7,11 @@ import {
   find,
   propEq,
   reject,
+  take,
   uniq,
 } from 'ramda';
 import uuidv4 from 'uuid/v4';
+import queryString from 'query-string';
 
 import {
   API_ENDPOINT,
@@ -17,7 +19,12 @@ import {
   lookupData,
   searchData,
 } from './constants';
-import { readKey, saveKey, validateEmptyKey } from './utils';
+import {
+  isNotValidSearchOptions,
+  readKey,
+  saveKey,
+  validateEmptyKey,
+} from './utils';
 
 /**
  * @typedef Reviews
@@ -34,14 +41,35 @@ class Api {
    * @link https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api#searchexamples
    * @return {Object} results given by API
    */
-  async search(term, isMocked) {
-    if (isMocked) {
-      console.warn('Search data was mocked!');
-      return filter(propEq('isStreamable', true), searchData);
+  async search(term, options = {}, isMocked) {
+    const defaultOptions = {
+      limit: 30,
+      media: 'music',
+    };
+
+    const opts = { ...defaultOptions, ...options, term };
+
+    if (isNotValidSearchOptions(opts)) {
+      throw new Error('Parameters are not valid');
     }
 
+    const { limit } = opts;
+
+    if (limit < 1 || limit > 200) {
+      throw new Error('limit outside paramaters');
+    }
+
+    if (isMocked) {
+      console.warn('Search data was mocked!');
+      return compose(
+        take(limit),
+        filter(propEq('isStreamable', true)),
+      )(searchData);
+    }
+    const parsedQueryString = queryString.stringify(opts);
+
     const response = await fetch(
-      `${API_ENDPOINT}/search?media=music&term=${term}`,
+      `${API_ENDPOINT}/search?${parsedQueryString}`,
     );
     const { results } = await response.json();
     return filter(propEq('isStreamable', true), results);

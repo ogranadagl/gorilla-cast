@@ -1,14 +1,12 @@
 <template>
   <v-card max-width="500" class="mx-auto">
-    <v-toolbar color="green" dark>
+    <v-toolbar v-show="toolbar" color="green" dark>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
-
       <v-spacer />
-
       <search-input :keypressEvent="'search-track'" @search-track="searchTrack" />
     </v-toolbar>
 
-    <v-list two-line flat>
+    <v-list two-line>
       <v-list-item-group v-model="selected">
         <template v-for="(item, index) in list">
           <v-list-item :key="item.trackId">
@@ -23,17 +21,18 @@
               <v-list-item-subtitle v-text="getSubTitle(item.artistName, item.primaryGenreName)" />
             </v-list-item-content>
 
-            <v-list-item-icon>
+            <v-list-item-action>
               <v-icon
                 @click="addFavorite(item.trackId)"
                 :color="item.active ? 'deep-purple accent-4' : 'grey'"
               >mdi-star-outline</v-icon>
-              <v-spacer />
+            </v-list-item-action>
+            <v-list-item-action>
               <v-icon
                 @click="playTrack(item.trackId)"
                 :color="item.active ? 'deep-purple accent-4' : 'grey'"
               >mdi-play-circle-outline</v-icon>
-            </v-list-item-icon>
+            </v-list-item-action>
           </v-list-item>
 
           <v-divider v-if="index + 1 < list.length" :key="prefix+item.trackId"></v-divider>
