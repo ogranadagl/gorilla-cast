@@ -1,7 +1,7 @@
 <template>
   <div>
     <search-input
-      :change="searchTracks"
+      @change="searchTracks"
       :disabled="loading"
       :loading="dialog"
       ref="searchInput"
