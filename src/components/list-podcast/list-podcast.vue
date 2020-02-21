@@ -41,7 +41,7 @@
 
       <v-footer v-show="footer" color="success" class="font-weight-medium">
         <v-col class="text-right" cols="12">
-          <v-btn href="/list" text color="white">{{ moreLabel }}</v-btn>
+          <v-btn to="/list" text color="white">{{ moreLabel }}</v-btn>
         </v-col>
       </v-footer>
     </v-list>

@@ -12,6 +12,11 @@ export default {
         },
         {
           icon: 'led-outline',
+          name: 'List',
+          link: '/list',
+        },
+        {
+          icon: 'led-outline',
           name: 'About',
           link: '/about',
         },
