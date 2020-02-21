@@ -3,7 +3,7 @@
     <v-toolbar v-show="toolbar" color="green" dark>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
-      <search-input :keypressEvent="'search-track'" @search-track="searchTrack" />
+      <search-input @change="searchTrack" />
     </v-toolbar>
 
     <v-list two-line>
@@ -38,6 +38,12 @@
           <v-divider v-if="index + 1 < list.length" :key="prefix+item.trackId"></v-divider>
         </template>
       </v-list-item-group>
+
+      <v-footer v-show="footer" color="success" class="font-weight-medium">
+        <v-col class="text-right" cols="12">
+          <v-btn href="/list" text color="white">{{ moreLabel }}</v-btn>
+        </v-col>
+      </v-footer>
     </v-list>
   </v-card>
 </template>

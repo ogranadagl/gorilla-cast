@@ -3,7 +3,7 @@
     <div class="home">
       <img alt="Vue logo" src="../assets/logo.png" />
     </div>
-    <list-podcast :list="podcasts" />
+    <list-podcast :list="podcasts" @search-track="filterPodcasts" />
   </div>
 </template>
 
@@ -19,6 +19,13 @@ export default {
     return {
       podcasts: [],
     };
+  },
+  methods: {
+    filterPodcasts(term) {
+      api.search(term).then((res) => {
+        this.podcasts = res;
+      });
+    },
   },
   components: {
     ListPodcast,

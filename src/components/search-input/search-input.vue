@@ -1,8 +1,7 @@
 <template>
   <v-text-field
     :label="label"
-    @change="changeTerm"
-    @keypress="keypress"
+    @change="change"
     append-icon="mdi-magnify"
     color="white"
     hide-details

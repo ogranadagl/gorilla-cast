@@ -35,6 +35,14 @@ export default {
       type: Boolean,
       default: true,
     },
+    footer: {
+      type: Boolean,
+      default: true,
+    },
+    moreLabel: {
+      type: String,
+      default: 'More...',
+    },
   },
   components: {
     SearchInput,
