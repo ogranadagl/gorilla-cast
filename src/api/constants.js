@@ -1951,3 +1951,17 @@ export const lookupData = {
   contentAdvisoryRating: 'Explicit',
   isStreamable: true,
 };
+
+// https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api#searching
+export const SEARCH_ALLOWED_PARAMETERS = [
+  'attribute',
+  'callback',
+  'country',
+  'entity',
+  'explicit',
+  'lang',
+  'limit',
+  'media',
+  'term',
+  'version',
+];

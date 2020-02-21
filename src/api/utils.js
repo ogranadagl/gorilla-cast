@@ -1,4 +1,14 @@
-import { curry } from 'ramda';
+import {
+  all,
+  compose,
+  curry,
+  flip,
+  includes,
+  keys,
+  not,
+} from 'ramda';
+
+import { SEARCH_ALLOWED_PARAMETERS } from './constants';
 
 /**
  * Read key from local storage
@@ -36,3 +46,9 @@ export function validateEmptyKey(value, key) {
     throw new Error(`Missing "${key}" field`);
   }
 }
+
+export const isNotValidSearchOptions = compose(
+  not,
+  all(flip(includes)(SEARCH_ALLOWED_PARAMETERS)),
+  keys,
+);
