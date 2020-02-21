@@ -28,7 +28,9 @@ const routes = [
   {
     path: '/list/:category?',
     name: 'List',
-    component: () => import(/* webpackChunkName: "about" */ '../views/list-all-podcast/list-all-podcast.vue'),
+    component: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import(/* webpackChunkName: "about" */ '../views/list-all-podcast/list-all-podcast.vue'),
   },
 ];
 

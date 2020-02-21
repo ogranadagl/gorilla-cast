@@ -17,7 +17,11 @@
       <v-card>
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="dialog = false" color="green darken-1" text>
+          <v-btn
+            @click="dialog = false"
+            color="green darken-1"
+            text
+          >
             Close
           </v-btn>
         </v-card-actions>
@@ -25,7 +29,7 @@
           <span class="headline">Results</span>
         </v-card-title>
         <v-card-text>
-          <list-podcast :list="results" :toolbar="false" :footer="false" />
+          <list-podcast :list="results" :toolbar="false" :footer="false"/>
         </v-card-text>
       </v-card>
     </v-dialog>
