@@ -44,6 +44,10 @@ export default {
       type: String,
       default: 'More...',
     },
+    width: {
+      type: String,
+      default: '500',
+    },
   },
   components: {
     SearchInput,

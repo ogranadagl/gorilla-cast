@@ -1,12 +1,12 @@
 <template>
-  <v-card max-width="500" class="mx-auto">
+  <v-card :width="width" class="mx-auto">
     <v-toolbar v-show="toolbar" color="green" dark>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
       <search-input @change="searchTrack" />
     </v-toolbar>
 
-    <v-list two-line>
+    <v-list two-line width="100%">
       <v-list-item-group v-model="selected">
         <template v-for="(item, index) in list">
           <v-list-item :key="item.trackId">

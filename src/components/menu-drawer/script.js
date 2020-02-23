@@ -11,7 +11,7 @@ export default {
           link: '/',
         },
         {
-          icon: 'led-outline',
+          icon: 'playlist-music',
           name: 'List',
           link: '/list',
         },

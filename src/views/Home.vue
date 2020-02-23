@@ -18,11 +18,12 @@ export default {
   data() {
     return {
       podcasts: [],
+      limit: 5,
     };
   },
   methods: {
     filterPodcasts(term) {
-      api.search(term).then((res) => {
+      api.search(term, { limit: this.limit }).then((res) => {
         this.podcasts = res;
       });
     },
@@ -31,7 +32,7 @@ export default {
     ListPodcast,
   },
   created() {
-    api.search('software').then((res) => {
+    api.search('software', { limit: this.limit }).then((res) => {
       this.podcasts = res;
     });
   },
