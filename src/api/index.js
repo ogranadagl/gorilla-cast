@@ -1,28 +1,43 @@
-/* eslint-disable class-methods-use-this, no-console */
+/* eslint-disable no-underscore-dangle */
 
 import {
+  any,
   append,
+  assoc,
   compose,
   filter,
-  find,
+  head,
+  ifElse,
+  isEmpty,
+  isNil,
+  map,
+  omit,
+  or,
+  pathEq,
+  prop,
   propEq,
   reject,
   take,
   uniq,
 } from 'ramda';
-import uuidv4 from 'uuid/v4';
+import { denormalize, normalize } from 'normalizr';
+import deepmerge from 'deepmerge';
 import queryString from 'query-string';
+import uuidv4 from 'uuid/v4';
 
+import { favoritesSchema, reviewSchema } from './normalizr';
 import {
   API_ENDPOINT,
+  DEFAULT_STATE,
   KeyNames,
   lookupData,
   searchData,
 } from './constants';
 import {
   isNotValidSearchOptions,
-  readKey,
-  saveKey,
+  isStreamable,
+  readLocalStorage,
+  saveLocalStorage,
   validateEmptyKey,
 } from './utils';
 
@@ -34,9 +49,16 @@ import {
  */
 
 class Api {
+  constructor() {
+    this._state = readLocalStorage(KeyNames.state, DEFAULT_STATE);
+
+    this.mapFavoritedProperty = map((track) => assoc('isFavorited', this.isFavorited(track), track));
+  }
+
   /**
    * Search podcasts given a term
    * @param  {String} term - Term to search
+   * @param  {Object} options - Query options
    * @param  {Boolean} isMocked - Mock data to avoid API faults
    * @link https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api#searchexamples
    * @return {Object} results given by API
@@ -50,7 +72,7 @@ class Api {
     const opts = { ...defaultOptions, ...options, term };
 
     if (isNotValidSearchOptions(opts)) {
-      throw new Error('Parameters are not valid');
+      throw new Error('Search "options" parameter are not valid');
     }
 
     const { limit } = opts;
@@ -59,25 +81,27 @@ class Api {
       throw new Error('limit outside paramaters');
     }
 
+    let results = [];
+
     if (isMocked) {
       console.warn('Search data was mocked!');
-      return compose(
-        take(limit),
-        filter(propEq('isStreamable', true)),
-      )(searchData);
+      results = searchData;
+    } else {
+      const parsedQueryString = queryString.stringify(opts);
+      const response = await fetch(`${API_ENDPOINT}/search?${parsedQueryString}`);
+      ({ results } = await response.json());
     }
-    const parsedQueryString = queryString.stringify(opts);
 
-    const response = await fetch(
-      `${API_ENDPOINT}/search?${parsedQueryString}`,
-    );
-    const { results } = await response.json();
-    return filter(propEq('isStreamable', true), results);
+    return compose(
+      this.mapFavoritedProperty,
+      isStreamable,
+      take(limit), // Helpfull when data is mocked
+    )(results);
   }
 
   /**
    * Lookup request to search for content in the stores based on iTunes
-   * @param  {Int} artistId - id to search
+   * @param  {Int} trackId - id to search
    * @param  {Boolean} isMocked - Mock data to avoid API faults
    * @link https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api#lookup
    * @return {Object} results given by API
@@ -87,43 +111,76 @@ class Api {
       console.warn('Lookup data was mocked!');
       return lookupData;
     }
+
     const response = await fetch(`${API_ENDPOINT}/lookup?id=${trackId}`);
     const { results = [] } = await response.json();
-    return find(propEq('trackId', trackId), results) || {};
+
+    return compose(
+      head,
+      ifElse(
+        isNil,
+        () => ({}),
+        this.mapFavoritedProperty,
+      ),
+      filter(propEq('trackId', trackId)),
+    )(results);
   }
 
   /**
    * Get favorites list
-   * @return {number[]} Favorites list
+   * @return {Track[]} Favorites list
    */
   getFavorites() {
-    return readKey(KeyNames.favorites, []);
+    return denormalize(this.state.favorites, [favoritesSchema], this.entities);
   }
 
   /**
    * Add favorite
-   * @param  {} id - Id to add
+   * @param  {} track - track entity
    * @return {number[]} Favorites list
    */
-  addFavorite(id) {
-    validateEmptyKey(id, 'id');
+  addFavorite(track) {
+    if (isNil(track) || isEmpty(track) || isNil(track.trackId)) {
+      throw new Error('Wrong track entity');
+    }
 
-    return compose(saveKey(KeyNames.favorites), uniq, append(id), this.getFavorites)();
+    const favorite = {
+      id: uuidv4(), // side effect, this is for simplicity
+      track,
+    };
+
+    const { result, entities } = normalize(favorite, favoritesSchema);
+
+    const favorites = compose(
+      uniq,
+      append(result),
+    )(this.state.favorites);
+
+    this.state = {
+      ...deepmerge(this.state, { entities }),
+      favorites,
+    };
+
+    return favorites;
   }
 
   /**
    * Remove favorites id
    * @param  {} id - Id to remove
-   * @return {number[]} Favorites list
+   * @return {Track[]} Favorites list
    */
   removeFavorite(id) {
     validateEmptyKey(id, 'id');
 
-    return compose(
-      saveKey(KeyNames.favorites),
-      reject((favoriteId) => favoriteId === id),
-      this.getFavorites,
-    )();
+    const favorites = reject((favoriteId) => favoriteId === id, this.state.favorites);
+
+    this.state = {
+      ...this.state,
+      entities: this.removeEntityById('favorites', id),
+      favorites,
+    };
+
+    return favorites;
   }
 
   /**
@@ -131,20 +188,21 @@ class Api {
    * @return {Reviews} Reviews list
    */
   getReviews() {
-    return readKey(KeyNames.reviews, []);
+    return denormalize(this.state.reviews, [reviewSchema], this.entities) || [];
   }
 
   /**
-   * Get reviews list by podcast id
-   * @param {String|Number} podcastId - Podcast Id
+   * Get reviews list by track id
+   * @param {String|Number} trackId - Podcast Id
    * @return {Reviews} Reviews list
    */
-  getReviewsByPodcastId(podcastId) {
-    validateEmptyKey(podcastId, 'podcastId');
+  getReviewsByTrackId(trackId) {
+    validateEmptyKey(trackId, 'trackId');
 
     return compose(
-      filter(propEq('podcastId', podcastId)),
-      this.getReviews,
+      map(omit(['track'])),
+      filter(pathEq(['track', 'trackId'], trackId)),
+      this.getReviews.bind(this),
     )();
   }
 
@@ -156,20 +214,36 @@ class Api {
    * @param  {Number} options.stars - Rating given by the user
    * @return {Reviews} Reviews list
    */
-  addReview({ comment = null, podcastId, stars }) {
-    validateEmptyKey(podcastId, 'podcastId');
+  addReview({ comment = null, track, stars }) {
+    validateEmptyKey(track, 'track');
     validateEmptyKey(stars, 'stars');
 
-    return compose(
-      saveKey(KeyNames.reviews),
-      append({
-        id: uuidv4(), // side effect, this is for simplicity
-        comment,
-        podcastId,
-        stars,
-      }),
-      this.getReviews,
-    )();
+    if (isEmpty(track) || isNil(track.trackId)) {
+      throw new Error('Wrong track entity');
+    }
+
+    const id = uuidv4(); // side effect, this is for simplicity
+
+    const review = {
+      id,
+      comment,
+      track,
+      stars,
+    };
+
+    const { entities } = normalize(review, reviewSchema);
+
+    const reviews = compose(
+      uniq,
+      append(id),
+    )(this.state.reviews);
+
+    this.state = {
+      ...deepmerge(this.state, { entities }),
+      reviews,
+    };
+
+    return reviews;
   }
 
   /**
@@ -180,11 +254,48 @@ class Api {
   removeReview(id) {
     validateEmptyKey(id, 'id');
 
+    const reviews = reject((favoriteId) => favoriteId === id, this.state.reviews);
+
+    this.state = {
+      ...this.state,
+      entities: this.removeEntityById('reviews', id),
+      reviews,
+    };
+
+    return reviews;
+  }
+
+  set state(state) {
+    this._state = state;
+    saveLocalStorage(KeyNames.state, state);
+  }
+
+  get state() {
+    return this._state;
+  }
+
+  get entities() {
+    return this._state.entities;
+  }
+
+  removeEntityById(entity, id) {
+    return {
+      ...this.state.entities,
+      [entity]: omit([id], this.state.entities[entity]),
+    };
+  }
+
+  isFavorited(track) {
     return compose(
-      saveKey(KeyNames.reviews),
-      reject(propEq('id', id)),
-      this.getReviews,
-    )();
+      ifElse(
+        or(isEmpty, isNil(prop('trackId'))),
+        () => false,
+        compose(
+          any(pathEq(['track', 'trackId'], prop('trackId', track))),
+          this.getFavorites.bind(this),
+        ),
+      ),
+    )(track);
   }
 }
 

@@ -1,8 +1,17 @@
 export const API_ENDPOINT = 'https://itunes.apple.com';
 
+export const DEFAULT_STATE = {
+  entities: {
+    favorites: {},
+    reviews: {},
+    tracks: {},
+  },
+  favorites: [],
+  reviews: [],
+};
+
 export const KeyNames = {
-  favorites: 'favorites',
-  reviews: 'reviews',
+  state: 'state',
 };
 
 export const searchData = [
