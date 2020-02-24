@@ -7,6 +7,7 @@
 
 <script>
 import api from '@/api';
+import { getRandomPodcastCategory } from '@/utils';
 import ListPodcast from '@/components/list-podcast/list-podcast.vue';
 
 export default {
@@ -27,7 +28,7 @@ export default {
     },
   },
   created() {
-    api.search('software').then((res) => {
+    api.search(getRandomPodcastCategory()).then((res) => {
       this.podcasts = res;
     });
   },

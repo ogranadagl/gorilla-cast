@@ -6,3 +6,10 @@ export const MESSAGE_ADD_FAVORITE = 'add-favorite';
 /* Constant to define the update rate */
 export const UPDATE_INTERVAL = 1000;
 export const TIME_OFFSET_10 = 10;
+export const PODCAST_CATEGORIES = [
+  'aerosmith',
+  'linkin park',
+  'metalica',
+  'the doors',
+  'rolling stones',
+];

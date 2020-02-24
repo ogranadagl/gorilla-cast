@@ -12,6 +12,7 @@
 
 import ListPodcast from '@/components/list-podcast/list-podcast.vue';
 import api from '@/api';
+import { getRandomPodcastCategory } from '@/utils';
 
 export default {
   name: 'Home',
@@ -32,7 +33,7 @@ export default {
     ListPodcast,
   },
   created() {
-    api.search('software', { limit: this.limit }).then((res) => {
+    api.search(getRandomPodcastCategory(), { limit: this.limit }).then((res) => {
       this.podcasts = res;
     });
   },
