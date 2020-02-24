@@ -34,17 +34,13 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn icon>
-          <v-icon
-            @click="addFavorite(trackDetail)"
-            :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
+          <v-icon @click="addFavorite" :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
             >mdi-star-outline</v-icon
           >
         </v-btn>
 
         <v-btn icon>
-          <v-icon
-            @click="playTrack(trackDetail)"
-            :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
+          <v-icon @click="playTrack" :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
             >mdi-play-circle-outline</v-icon
           >
         </v-btn>

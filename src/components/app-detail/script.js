@@ -4,11 +4,11 @@ export default {
   name: 'app-detail',
   props: ['trackDetail'],
   methods: {
-    addFavorite(track) {
-      this.$emit(MESSAGE_ADD_FAVORITE, track);
+    addFavorite() {
+      this.$emit(MESSAGE_ADD_FAVORITE, this.trackDetail);
     },
-    playTrack(track) {
-      this.$root.$emit(MESSAGE_PLAY_TRACK, track);
+    playTrack() {
+      this.$root.$emit(MESSAGE_PLAY_TRACK, this.trackDetail);
     },
   },
 };
