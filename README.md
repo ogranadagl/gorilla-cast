@@ -37,7 +37,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## API Usage
-To ackire podcasts from a topic you can use:
+To acquire podcasts from a topic you can use:
 ```javascript
 
   /**
