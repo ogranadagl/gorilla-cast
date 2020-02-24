@@ -1,6 +1,6 @@
 import SearchInput from '@/components/search-input/search-input.vue';
 import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
-import { MESSAGE_PLAY_TRACK, MESSAGE_ADD_FAVORITE, MESSAGE_SEARCH_TRACK } from '@/utils/constants';
+import { MESSAGE_PLAY_TRACK, MESSAGE_TOGGLE_FAVORITE, MESSAGE_SEARCH_TRACK } from '@/utils/constants';
 
 export default {
   name: 'ListPodcast',
@@ -17,14 +17,11 @@ export default {
     searchTrack(track) {
       this.$emit(MESSAGE_SEARCH_TRACK, track);
     },
-    addFavorite(track) {
-      this.$emit(MESSAGE_ADD_FAVORITE, track);
-    },
     playTrack(track) {
       this.$root.$emit(MESSAGE_PLAY_TRACK, track);
     },
     toggleFavorite(track) {
-      console.log('toggleFavorite', track);
+      this.$emit(MESSAGE_TOGGLE_FAVORITE, track);
     },
   },
   props: {

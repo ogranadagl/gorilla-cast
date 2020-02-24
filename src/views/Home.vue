@@ -3,7 +3,11 @@
     <div class="home">
       <img alt="Vue logo" src="../assets/logo.png" />
     </div>
-    <list-podcast :list="podcasts" @search-track="filterPodcasts" />
+    <list-podcast
+      :list="podcasts"
+      @search-track="filterPodcasts"
+      @toggle-favorite="toggleFavorite"
+    />
   </div>
 </template>
 
@@ -18,22 +22,31 @@ export default {
   data() {
     return {
       podcasts: [],
+      lastTerm: null,
     };
   },
   methods: {
     filterPodcasts(term) {
-      api.search(term).then((res) => {
-        this.podcasts = res;
+      api.search(term).then((response) => {
+        this.podcasts = response;
+        this.lastTerm = term;
       });
+    },
+    toggleFavorite(track) {
+      if (track.isFavorited) {
+        debugger;
+        api.removeFavorite(track.trackId);
+      } else {
+        api.addFavorite(track);
+      }
+      this.filterPodcasts(this.lastTerm);
     },
   },
   components: {
     ListPodcast,
   },
-  created() {
-    api.search('software').then((res) => {
-      this.podcasts = res;
-    });
+  mounted() {
+    this.filterPodcasts('software');
   },
 };
 </script>
