@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
 import {
-  any,
   append,
   assoc,
   compose,
@@ -12,9 +11,9 @@ import {
   isNil,
   map,
   omit,
-  or,
   pathEq,
   prop,
+  propOr,
   propEq,
   reject,
   take,
@@ -52,7 +51,7 @@ class Api {
   constructor() {
     this._state = readLocalStorage(KeyNames.state, DEFAULT_STATE);
 
-    this.mapFavoritedProperty = map((track) => assoc('isFavorited', this.isFavorited(track), track));
+    this.mapFavoritedProperty = map((track) => assoc('favoriteId', this.favoriteId(track), track));
   }
 
   /**
@@ -285,16 +284,14 @@ class Api {
     };
   }
 
-  isFavorited(track) {
+  favoriteId(track) {
     return compose(
-      ifElse(
-        or(isEmpty, isNil(prop('trackId'))),
-        () => false,
-        compose(
-          any(pathEq(['track', 'trackId'], prop('trackId', track))),
-          this.getFavorites.bind(this),
-        ),
+      propOr(false, 'id'),
+      head,
+      filter(
+        pathEq(['track', 'trackId'], prop('trackId', track)),
       ),
+      this.getFavorites.bind(this),
     )(track);
   }
 }
