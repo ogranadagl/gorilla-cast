@@ -1,11 +1,12 @@
 import {
   all,
   compose,
-  curry,
+  filter,
   flip,
   includes,
   keys,
   not,
+  propEq,
 } from 'ramda';
 
 import { SEARCH_ALLOWED_PARAMETERS } from './constants';
@@ -18,21 +19,20 @@ import { SEARCH_ALLOWED_PARAMETERS } from './constants';
  * @throws {SyntaxError}
  * @return  {*} Parsed value retived by local storage or defaultValue if is a falsy value
  */
-export function readKey(keyName, defaultValue) {
+export function readLocalStorage(keyName, defaultValue) {
   return JSON.parse(localStorage.getItem(keyName)) || defaultValue;
 }
 
 /**
- * Curried funciton to add a key to the storage, or update that key's value if it already exists
+ * Add a key to the storage, or update that key's value if it already exists
  * @param  {DOMString} keyName - A DOMString containing the name of the key you want to
  * create/update.
  * @param  {*} keyValue - Value you want to give the key you are creating/updating
- * @return {*} keyValue
+ * @return {void} keyValue
  */
-export const saveKey = curry((keyName, keyValue) => {
+export const saveLocalStorage = (keyName, keyValue) => {
   localStorage.setItem(keyName, JSON.stringify(keyValue));
-  return keyValue;
-});
+};
 
 /**
  * Validate if value is empty and throws and error
@@ -52,3 +52,5 @@ export const isNotValidSearchOptions = compose(
   all(flip(includes)(SEARCH_ALLOWED_PARAMETERS)),
   keys,
 );
+
+export const isStreamable = filter(propEq('isStreamable', true));
