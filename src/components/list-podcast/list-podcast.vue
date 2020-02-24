@@ -22,10 +22,11 @@
             </v-list-item-content>
 
             <v-list-item-action>
-              <v-icon
+              <!--<v-icon
                 @click="addFavorite(item.trackId)"
                 :color="item.active ? 'deep-purple accent-4' : 'grey'"
-              >mdi-star-outline</v-icon>
+              >mdi-star-outline</v-icon>-->
+              <FavoriteButton @toggle-favorite="toggleFavorite" :track="item" />
             </v-list-item-action>
             <v-list-item-action>
               <v-icon

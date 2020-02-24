@@ -1,4 +1,5 @@
 import SearchInput from '@/components/search-input/search-input.vue';
+import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
 
 export default {
   name: 'ListPodcast',
@@ -20,6 +21,9 @@ export default {
     },
     playTrack(trackId) {
       this.$emit('play-track', trackId);
+    },
+    toggleFavorite(track) {
+      console.log('toggleFavorite', track);
     },
   },
   props: {
@@ -46,5 +50,6 @@ export default {
   },
   components: {
     SearchInput,
+    FavoriteButton,
   },
 };
