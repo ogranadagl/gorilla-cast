@@ -130,6 +130,10 @@ class Api {
     return denormalize(this.state.favorites, [favoritesSchema], this.entities);
   }
 
+  /**
+   * Returns the first n elements of favorites tracks
+   * * @param  {} n - elements to take
+   */
   getFavoritesTracks(n) {
     return compose(
       take(n || Infinity),
@@ -142,6 +146,7 @@ class Api {
   /**
    * Add favorite
    * @param  {} track - track entity
+   * @param  {} n - elements to take
    * @return {number[]} Favorites list
    */
   addFavorite(track, n) {
@@ -173,6 +178,7 @@ class Api {
   /**
    * Remove favorites id
    * @param  {} id - Id to remove
+   * @param  {} n - elements to take
    * @return {Track[]} Favorites list
    */
   removeFavorite(id, n) {
