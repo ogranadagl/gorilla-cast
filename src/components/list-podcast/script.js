@@ -1,5 +1,6 @@
 import SearchInput from '@/components/search-input/search-input.vue';
-import { MESSAGE_PLAY_TRACK, MESSAGE_ADD_FAVORITE, MESSAGE_SEARCH_TRACK } from '@/utils/constants';
+import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
+import { MESSAGE_PLAY_TRACK, MESSAGE_SEARCH_TRACK } from '@/utils/constants';
 
 export default {
   name: 'ListPodcast',
@@ -16,8 +17,8 @@ export default {
     searchTrack(track) {
       this.$emit(MESSAGE_SEARCH_TRACK, track);
     },
-    addFavorite(track) {
-      this.$emit(MESSAGE_ADD_FAVORITE, track);
+    clickFavorite(emitMessage, track) {
+      this.$emit(emitMessage, track);
     },
     playTrack(track) {
       this.$root.$emit(MESSAGE_PLAY_TRACK, track);
@@ -50,7 +51,6 @@ export default {
     },
     to: {
       type: String,
-      default: '/list',
     },
     noContentLabel: {
       type: String,
@@ -58,6 +58,7 @@ export default {
     },
   },
   components: {
+    FavoriteButton,
     SearchInput,
   },
 };
