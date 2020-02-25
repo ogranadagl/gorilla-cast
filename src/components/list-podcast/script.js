@@ -44,6 +44,18 @@ export default {
       type: String,
       default: 'More...',
     },
+    listWidth: {
+      type: String,
+      default: '500',
+    },
+    to: {
+      type: String,
+      default: '/list',
+    },
+    noContentLabel: {
+      type: String,
+      default: 'There is nothing to show.',
+    },
   },
   components: {
     SearchInput,

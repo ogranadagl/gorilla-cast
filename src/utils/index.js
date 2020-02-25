@@ -1,3 +1,5 @@
+import { PODCAST_CATEGORIES } from '@/utils/constants';
+
 /**
  * Sanitizes a given text
  * @param {String} text
@@ -12,3 +14,10 @@ export function dateTimeToPlayTime(progress) {
   const currentTime = `${minutes}:${seconds}`;
   return currentTime;
 }
+/**
+ * Gets a random podcast category
+ */
+export const getRandomPodcastCategory = () => {
+  const offSet = Math.floor(Math.random() * PODCAST_CATEGORIES.length);
+  return PODCAST_CATEGORIES[offSet];
+};
