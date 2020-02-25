@@ -12,14 +12,14 @@
         </v-col>
         <v-col cols="9">
           <section>
-            <h2 class="font-weight-light">
+            <h3 class="font-weight-light">
               {{ track.trackName }}
-            </h2>
+            </h3>
           </section>
           <section>
-            <h2 class="font-weight-light">
+            <h3 class="font-weight-light">
               {{ track.artistName }}
-            </h2>
+            </h3>
           </section>
         </v-col>
       </v-row>
@@ -30,16 +30,15 @@
         <v-icon
           @click.prevent.stop="addFavorite"
           :color="track.active ? 'deep-purple accent-4' : 'grey'"
-          >mdi-star-outline</v-icon
-        >
+          >mdi-star-outline
+        </v-icon>
       </v-btn>
-
       <v-btn icon>
         <v-icon
           @click.prevent.stop="playTrack"
           :color="track.active ? 'deep-purple accent-4' : 'grey'"
-          >mdi-play-circle-outline</v-icon
-        >
+          >mdi-play-circle-outline
+        </v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
