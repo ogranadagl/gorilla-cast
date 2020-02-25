@@ -1,8 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 
 import {
+  any,
   append,
-  assoc,
+  assocPath,
   compose,
   filter,
   head,
@@ -13,8 +14,8 @@ import {
   omit,
   pathEq,
   prop,
-  propOr,
   propEq,
+  propOr,
   reject,
   take,
   uniq,
@@ -51,7 +52,7 @@ class Api {
   constructor() {
     this._state = readLocalStorage(KeyNames.state, DEFAULT_STATE);
 
-    this.mapFavoritedProperty = map((track) => assoc('favoriteId', this.favoriteId(track), track));
+    this.mapMetaProperty = map((track) => assocPath(['meta', 'favoriteId'], this.favoriteId(track), track));
   }
 
   /**
@@ -92,7 +93,7 @@ class Api {
     }
 
     return compose(
-      this.mapFavoritedProperty,
+      this.mapMetaProperty,
       isStreamable,
       take(limit), // Helpfull when data is mocked
     )(results);
@@ -116,11 +117,7 @@ class Api {
 
     return compose(
       head,
-      ifElse(
-        isNil,
-        () => ({}),
-        this.mapFavoritedProperty,
-      ),
+      ifElse(isNil, () => ({}), this.mapMetaProperty),
       filter(propEq('trackId', trackId)),
     )(results);
   }
@@ -133,14 +130,29 @@ class Api {
     return denormalize(this.state.favorites, [favoritesSchema], this.entities);
   }
 
+  getFavoritesTracks(n) {
+    return compose(
+      take(n || Infinity),
+      this.mapMetaProperty,
+      map(prop('track')),
+      this.getFavorites.bind(this),
+    )();
+  }
+
   /**
    * Add favorite
    * @param  {} track - track entity
    * @return {number[]} Favorites list
    */
-  addFavorite(track) {
+  addFavorite(track, n) {
     if (isNil(track) || isEmpty(track) || isNil(track.trackId)) {
       throw new Error('Wrong track entity');
+    }
+
+    const favorites = this.getFavorites();
+
+    if (any(pathEq(['track', 'trackId'], track.trackId), favorites)) {
+      throw new Error('track is already added');
     }
 
     const favorite = {
@@ -150,17 +162,12 @@ class Api {
 
     const { result, entities } = normalize(favorite, favoritesSchema);
 
-    const favorites = compose(
-      uniq,
-      append(result),
-    )(this.state.favorites);
-
     this.state = {
       ...deepmerge(this.state, { entities }),
-      favorites,
+      favorites: compose(uniq, append(result))(this.state.favorites),
     };
 
-    return favorites;
+    return this.getFavoritesTracks(n);
   }
 
   /**
@@ -168,7 +175,7 @@ class Api {
    * @param  {} id - Id to remove
    * @return {Track[]} Favorites list
    */
-  removeFavorite(id) {
+  removeFavorite(id, n) {
     validateEmptyKey(id, 'id');
 
     const favorites = reject((favoriteId) => favoriteId === id, this.state.favorites);
@@ -179,7 +186,7 @@ class Api {
       favorites,
     };
 
-    return favorites;
+    return this.getFavoritesTracks(n);
   }
 
   /**
@@ -232,10 +239,7 @@ class Api {
 
     const { entities } = normalize(review, reviewSchema);
 
-    const reviews = compose(
-      uniq,
-      append(id),
-    )(this.state.reviews);
+    const reviews = compose(uniq, append(id))(this.state.reviews);
 
     this.state = {
       ...deepmerge(this.state, { entities }),
@@ -253,7 +257,7 @@ class Api {
   removeReview(id) {
     validateEmptyKey(id, 'id');
 
-    const reviews = reject((favoriteId) => favoriteId === id, this.state.reviews);
+    const reviews = reject((reviewId) => reviewId === id, this.state.reviews);
 
     this.state = {
       ...this.state,
@@ -286,11 +290,9 @@ class Api {
 
   favoriteId(track) {
     return compose(
-      propOr(false, 'id'),
+      propOr(null, 'id'),
       head,
-      filter(
-        pathEq(['track', 'trackId'], prop('trackId', track)),
-      ),
+      filter(pathEq(['track', 'trackId'], prop('trackId', track))),
       this.getFavorites.bind(this),
     )(track);
   }
