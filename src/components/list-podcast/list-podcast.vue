@@ -29,8 +29,8 @@
               <v-icon
                 @click="playTrack(item)"
                 :color="item.active ? 'deep-purple accent-4' : 'grey'"
-                >mdi-play-circle-outline</v-icon
-              >
+                >mdi-play-circle-outline
+              </v-icon>
             </v-list-item-action>
           </v-list-item>
 
