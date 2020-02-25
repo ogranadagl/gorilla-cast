@@ -22,11 +22,9 @@
             </v-list-item-content>
 
             <v-list-item-action>
-              <v-icon
-                @click="addFavorite(item)"
-                :color="item.active ? 'deep-purple accent-4' : 'grey'"
-              >mdi-star-outline</v-icon>
+              <favorite-button @click="clickFavorite" :track="item"/>
             </v-list-item-action>
+
             <v-list-item-action>
               <v-icon
                 @click="playTrack(item)"
@@ -47,7 +45,7 @@
         </v-list-item>
       </v-list-item-group>
 
-      <v-footer v-show="footer" color="success" class="font-weight-medium">
+      <v-footer v-show="footer && to" color="success" class="font-weight-medium">
         <v-col class="text-right" cols="12">
           <v-btn :to="to" text color="white">{{ moreLabel }}</v-btn>
         </v-col>
