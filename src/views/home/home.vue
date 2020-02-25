@@ -1,29 +1,30 @@
 <template>
   <div>
-    <div class="home">
-      <img alt="Vue logo" src="../../assets/logo.png" />
-    </div>
-
     <v-container>
+      <v-row dense>
+        <v-col cols="12">
+          <recentPodcast
+            :track="track"
+            @add-favorite="addFavorite"
+            @remove-favorite="removeFavorite"
+          />
+        </v-col>
+      </v-row>
       <v-row>
-        <v-col
-          cols="12"
-          sm="6"
-        >
+        <v-col cols="12" sm="6">
           <list-podcast
             to="/favorites"
+            :detailPath="detailPath"
             :list="favorites"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
             title="Favorites"
           />
         </v-col>
-        <v-col
-          cols="12"
-          sm="6"
-        >
+        <v-col cols="12" sm="6">
           <list-podcast
             :to="toList"
+            :detailPath="detailPath"
             :list="podcasts"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"

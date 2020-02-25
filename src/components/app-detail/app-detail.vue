@@ -32,17 +32,15 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon @click="addFavorite" :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
-            >mdi-star-outline</v-icon
-          >
-        </v-btn>
+        <v-spacer />
+        <favorite-button @click="clickFavorite" :track="trackDetail" />
 
         <v-btn icon>
-          <v-icon @click="playTrack" :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
-            >mdi-play-circle-outline</v-icon
-          >
+          <v-icon
+            @click="playTrack(trackDetail)"
+            :color="trackDetail.active ? 'deep-purple accent-4' : 'grey'"
+            >mdi-play-circle-outline
+          </v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -53,4 +51,4 @@
 </template>
 
 <script src="./script.js"></script>
-<style lang="scss" src="./styles.scss"></style>
+<style lang="scss" src="./styles.scss" scoped></style>

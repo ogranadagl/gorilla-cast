@@ -44,3 +44,5 @@ router.afterEach(to => {
 });
 
 export default router;
+
+export const DETAIL_PATH = 'detail';

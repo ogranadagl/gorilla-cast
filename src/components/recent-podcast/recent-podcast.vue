@@ -1,5 +1,5 @@
 <template>
-  <v-card dark :to="`detail/${track.trackId}`">
+  <v-card dark :to="`${detailPath}/${track.trackId}`">
     <v-card-text class="d-flex flex-no-wrap justify-space-between">
       <v-card-title class="display-1">Last podcast</v-card-title>
     </v-card-text>
@@ -26,16 +26,10 @@
     </v-container>
     <v-card-actions>
       <v-spacer />
+      <favorite-button @click="clickFavorite" :track="track" />
       <v-btn icon>
         <v-icon
-          @click.prevent.stop="addFavorite"
-          :color="track.active ? 'deep-purple accent-4' : 'grey'"
-          >mdi-star-outline
-        </v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon
-          @click.prevent.stop="playTrack"
+          @click.prevent.stop="playTrack(track)"
           :color="track.active ? 'deep-purple accent-4' : 'grey'"
           >mdi-play-circle-outline
         </v-icon>

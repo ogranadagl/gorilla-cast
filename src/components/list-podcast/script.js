@@ -52,6 +52,9 @@ export default {
     to: {
       type: String,
     },
+    detailPath: {
+      type: String,
+    },
     noContentLabel: {
       type: String,
       default: 'There is nothing to show.',
