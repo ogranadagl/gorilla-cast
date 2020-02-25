@@ -3,9 +3,9 @@ import api from '@/api';
 import { getRandomPodcastCategory } from '@/utils';
 import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
 
-import { assocPath, map, take } from 'ramda';
+import { assocPath, map } from 'ramda';
 
-const maxItemns = 5;
+const maxListItems = 5;
 
 export default {
   name: 'Home',
@@ -29,10 +29,10 @@ export default {
       this.podcasts = map(listMapper, this.podcasts);
     },
     addFavorite(track) {
-      this.favorites = api.addFavorite(track, maxItemns);
+      this.favorites = api.addFavorite(track, maxListItems);
     },
     removeFavorite(track) {
-      this.favorites = api.removeFavorite(track.meta.favoriteId, maxItemns);
+      this.favorites = api.removeFavorite(track.meta.favoriteId, maxListItems);
     },
   },
   watch: {
@@ -48,6 +48,6 @@ export default {
   },
   async created() {
     this.podcasts = await api.search(getRandomPodcastCategory(), this.getSearchParams());
-    this.favorites = take(5, api.getFavoritesTracks());
+    this.favorites = api.getFavoritesTracks(maxListItems);
   },
 };
