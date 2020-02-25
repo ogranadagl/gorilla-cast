@@ -1,5 +1,5 @@
 <template>
-  <v-card :width="width" class="mx-auto">
+  <v-card :width="listWidth" class="mx-auto">
     <v-toolbar v-show="toolbar" color="green" dark>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
@@ -7,7 +7,7 @@
     </v-toolbar>
 
     <v-list two-line width="100%">
-      <v-list-item-group v-model="selected">
+      <v-list-item-group v-if="list.length > 0" v-model="selected">
         <template v-for="(item, index) in list">
           <v-list-item :key="item.trackId">
             <v-list-item-action>
@@ -39,9 +39,17 @@
         </template>
       </v-list-item-group>
 
+      <v-list-item-group v-else>
+        <v-list-item>
+          <v-list-item-content>
+              <v-list-item-title v-text="noContentLabel" />
+            </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+
       <v-footer v-show="footer" color="success" class="font-weight-medium">
         <v-col class="text-right" cols="12">
-          <v-btn to="/list" text color="white">{{ moreLabel }}</v-btn>
+          <v-btn :to="to" text color="white">{{ moreLabel }}</v-btn>
         </v-col>
       </v-footer>
     </v-list>

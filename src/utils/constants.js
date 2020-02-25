@@ -13,3 +13,6 @@ export const PODCAST_CATEGORIES = [
   'the doors',
   'rolling stones',
 ];
+export const DEFAULT_PODCAST_FILTER_PARAMS = {
+  limit: 5,
+};

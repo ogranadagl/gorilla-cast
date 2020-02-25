@@ -13,29 +13,30 @@
 import ListPodcast from '@/components/list-podcast/list-podcast.vue';
 import api from '@/api';
 import { getRandomPodcastCategory } from '@/utils';
+import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
 
 export default {
   name: 'Home',
   data() {
     return {
       podcasts: [],
-      limit: 5,
     };
   },
   methods: {
-    filterPodcasts(term) {
-      api.search(term, { limit: this.limit }).then((res) => {
-        this.podcasts = res;
-      });
+    async filterPodcasts(term) {
+      this.podcasts = await api.search(term, this.getSearchParams());
+    },
+    getSearchParams() {
+      return {
+        ...DEFAULT_PODCAST_FILTER_PARAMS,
+      };
     },
   },
   components: {
     ListPodcast,
   },
-  created() {
-    api.search(getRandomPodcastCategory(), { limit: this.limit }).then((res) => {
-      this.podcasts = res;
-    });
+  async created() {
+    this.podcasts = await api.search(getRandomPodcastCategory(), this.getSearchParams());
   },
 };
 </script>
