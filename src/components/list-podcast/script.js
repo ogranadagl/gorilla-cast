@@ -47,7 +47,7 @@ export default {
     },
     listWidth: {
       type: String,
-      default: '500',
+      default: '100%',
     },
     to: {
       type: String,
