@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Detail from '@/views/Detail/Detail.vue';
 import Home from '@/views/home/home.vue';
-import Favorites from '@/views/list-all-favorites/list-all-favorites.vue';
 
 Vue.use(VueRouter);
 
@@ -16,37 +14,27 @@ const routes = [
   {
     path: '/detail/:id',
     name: 'Detail',
-    component: Detail,
+    component: () => import(/* webpackChunkName: "detail" */ '../views/Detail/Detail.vue'),
   },
   {
     path: '/favorites',
     name: 'Favorites',
-    component: Favorites,
+    component: () => import(/* webpackChunkName: "list-all-favorites" */ '../views/list-all-favorites/list-all-favorites.vue'),
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/about/about.vue'),
   },
   {
     path: '/list/:category?',
     name: 'List',
-    component: () =>
-      // eslint-disable-next-line implicit-arrow-linebreak
-      import(/* webpackChunkName: "about" */ '../views/list-all-podcast/list-all-podcast.vue'),
+    component: () => import(/* webpackChunkName: "list-all-podcast" */ '../views/list-all-podcast/list-all-podcast.vue'),
   },
 ];
 
 const router = new VueRouter({
   routes,
-});
-
-// eslint-disable-next-line arrow-parens
-router.afterEach(to => {
-  document.title = `GorillaCast | ${to.name}`;
 });
 
 export default router;

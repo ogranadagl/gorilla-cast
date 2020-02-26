@@ -4,8 +4,4 @@
   </div>
 </template>
 
-<style lang="scss">
-.about {
-  text-align: center;
-}
-</style>
+<style lang="scss" src="./about.scss"></style>
