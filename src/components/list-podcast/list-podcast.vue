@@ -9,7 +9,7 @@
     <v-list two-line width="100%">
       <v-list-item-group v-if="list.length > 0" v-model="selected">
         <template v-for="(item, index) in list">
-          <v-list-item :key="item.trackId">
+          <v-list-item :key="item.trackId" :to="`${detailPath}/${item.trackId}`">
             <v-list-item-action>
               <v-list-item-avatar>
                 <v-img :alt="item.trackName" :src="item.artworkUrl30" />
@@ -22,26 +22,23 @@
             </v-list-item-content>
 
             <v-list-item-action>
-              <favorite-button @click="clickFavorite" :track="item"/>
+              <favorite-button @click="clickFavorite" :track="item" />
             </v-list-item-action>
 
             <v-list-item-action>
-              <v-icon
-                @click="playTrack(item)"
-                :color="item.active ? 'deep-purple accent-4' : 'grey'"
-              >mdi-play-circle-outline</v-icon>
+              <v-icon @click.prevent.stop="playTrack(item)">mdi-play-circle-outline </v-icon>
             </v-list-item-action>
           </v-list-item>
 
-          <v-divider v-if="index + 1 < list.length" :key="prefix+item.trackId"></v-divider>
+          <v-divider v-if="index + 1 < list.length" :key="prefix + item.trackId"></v-divider>
         </template>
       </v-list-item-group>
 
       <v-list-item-group v-else>
         <v-list-item>
           <v-list-item-content>
-              <v-list-item-title v-text="noContentLabel" />
-            </v-list-item-content>
+            <v-list-item-title v-text="noContentLabel" />
+          </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
 

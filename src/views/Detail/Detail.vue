@@ -6,7 +6,7 @@
     </v-snackbar>
     <v-row dense>
       <v-col cols="12">
-        <AppDetail :trackDetail="trackDetail" />
+        <AppDetail :track="track" />
       </v-col>
     </v-row>
   </v-container>

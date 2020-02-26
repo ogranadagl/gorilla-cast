@@ -1,7 +1,9 @@
 import ListPodcast from '@/components/list-podcast/list-podcast.vue';
+import recentPodcast from '@/components/recent-podcast/recent-podcast.vue';
 import api from '@/api';
 import { getRandomPodcastCategory } from '@/utils';
 import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
+import { DETAIL_PATH } from '@/router/index';
 
 import { assocPath, map } from 'ramda';
 
@@ -14,6 +16,8 @@ export default {
       podcasts: [],
       favorites: [],
       category: '',
+      track: {},
+      detailPath: DETAIL_PATH,
     };
   },
   computed: {
@@ -31,7 +35,8 @@ export default {
       };
     },
     updatePodcastList() {
-      const listMapper = (track) => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
+      // eslint-disable-next-line arrow-parens
+      const listMapper = track => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
       this.podcasts = map(listMapper, this.podcasts);
     },
     addFavorite(track) {
@@ -51,10 +56,13 @@ export default {
   },
   components: {
     ListPodcast,
+    recentPodcast,
   },
   async created() {
     this.category = getRandomPodcastCategory();
-    this.podcasts = await api.search(this.category, this.getSearchParams());
+    const results = await api.search(this.category, this.getSearchParams());
+    this.podcasts = results;
+    this.track = results.shift();
     this.favorites = api.getFavoritesTracks(maxListItems);
   },
 };
