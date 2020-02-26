@@ -1,3 +1,4 @@
+import { filterBySearchTerm } from '@/utils/filterBySearchTerm';
 import api from '@/api';
 import ListPodcast from '@/components/list-podcast/list-podcast.vue';
 import { DETAIL_PATH } from '@/router/index';
@@ -10,12 +11,20 @@ export default {
     return {
       favorites: [],
       detailPath: DETAIL_PATH,
+      favoriteListFiltered: [],
     };
   },
   components: {
     ListPodcast,
   },
-  async mounted() {
+  methods: {
+    async filterFavorites(term) {
+      const termSanitized = term.toLowerCase().trim();
+      this.favoriteListFiltered = filterBySearchTerm(termSanitized, this.favorites);
+    },
+  },
+  async created() {
     this.favorites = api.getFavoritesTracks(maxListItems);
+    this.favoriteListFiltered = [...this.favorites];
   },
 };

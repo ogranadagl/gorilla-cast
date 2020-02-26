@@ -14,12 +14,16 @@ const routes = [
   {
     path: '/detail/:id',
     name: 'Detail',
-    component: () => import(/* webpackChunkName: "detail" */ '../views/Detail/Detail.vue'),
+    component: () => import(/* webpackChunkName: "detail" */ '../views/details/details.vue'),
   },
   {
     path: '/favorites',
     name: 'Favorites',
-    component: () => import(/* webpackChunkName: "list-all-favorites" */ '../views/list-all-favorites/list-all-favorites.vue'),
+    component: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import(
+        /* webpackChunkName: "list-all-favorites" */ '../views/list-all-favorites/list-all-favorites.vue'
+      ),
   },
   {
     path: '/about',
@@ -29,7 +33,11 @@ const routes = [
   {
     path: '/list/:category?',
     name: 'List',
-    component: () => import(/* webpackChunkName: "list-all-podcast" */ '../views/list-all-podcast/list-all-podcast.vue'),
+    component: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import(
+        /* webpackChunkName: "list-all-podcast" */ '../views/list-all-podcast/list-all-podcast.vue'
+      ),
   },
 ];
 
