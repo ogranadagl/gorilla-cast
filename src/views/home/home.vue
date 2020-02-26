@@ -23,7 +23,7 @@
           sm="6"
         >
           <list-podcast
-            to="/list"
+            :to="toList"
             :list="podcasts"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
