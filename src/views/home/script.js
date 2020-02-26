@@ -13,7 +13,13 @@ export default {
     return {
       podcasts: [],
       favorites: [],
+      category: '',
     };
+  },
+  computed: {
+    toList() {
+      return `/list/${this.category}`;
+    },
   },
   methods: {
     async filterPodcasts(term) {
@@ -47,7 +53,8 @@ export default {
     ListPodcast,
   },
   async created() {
-    this.podcasts = await api.search(getRandomPodcastCategory(), this.getSearchParams());
+    this.category = getRandomPodcastCategory();
+    this.podcasts = await api.search(this.category, this.getSearchParams());
     this.favorites = api.getFavoritesTracks(maxListItems);
   },
 };

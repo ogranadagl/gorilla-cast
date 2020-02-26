@@ -18,6 +18,6 @@ export default {
     },
   },
   async created() {
-    this.podcasts = await api.search(getRandomPodcastCategory());
+    this.podcasts = await api.search(this.$route.params.category || getRandomPodcastCategory());
   },
 };
