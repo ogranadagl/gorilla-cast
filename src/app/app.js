@@ -1,9 +1,4 @@
-<template>
-  <main-layout></main-layout>
-</template>
-
-<script>
-import MainLayout from '@/layouts/main-layout.vue';
+import MainLayout from '@/components/main-layout/main-layout.vue';
 
 export default {
   components: {
@@ -16,4 +11,3 @@ export default {
     this.$vuetify.theme.dark = true;
   },
 };
-</script>
