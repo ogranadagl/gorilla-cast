@@ -12,4 +12,4 @@
   </v-container>
 </template>
 
-<script src="./script.js"></script>
+<script src="./details.js"></script>
