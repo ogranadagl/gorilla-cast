@@ -1,4 +1,3 @@
-
 export default {
   name: 'MenuDrawer',
   data() {
@@ -14,6 +13,11 @@ export default {
           icon: 'playlist-music',
           name: 'List',
           link: '/list',
+        },
+        {
+          icon: 'star',
+          name: 'Favorites',
+          link: '/favorites',
         },
         {
           icon: 'led-outline',

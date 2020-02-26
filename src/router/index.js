@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import Detail from '@/views/Detail/Detail.vue';
 import Home from '@/views/home/home.vue';
+import Favorites from '@/views/list-all-favorites/list-all-favorites.vue';
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/detail/:id',
     name: 'Detail',
     component: Detail,
+  },
+  {
+    path: '/favorites',
+    name: 'Favorites',
+    component: Favorites,
   },
   {
     path: '/about',
