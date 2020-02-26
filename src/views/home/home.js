@@ -32,12 +32,10 @@ export default {
   },
   methods: {
     filterPodcasts(term) {
-      const termSanitized = term.toLowerCase().trim();
-      this.podcastListFiltered = filterBySearchTerm(termSanitized, this.podcasts);
+      this.podcastListFiltered = filterBySearchTerm(term, this.podcasts);
     },
     async filterFavorites(term) {
-      const termSanitized = term.toLowerCase().trim();
-      this.favoriteListFiltered = filterBySearchTerm(termSanitized, this.favorites);
+      this.favoriteListFiltered = filterBySearchTerm(term, this.favorites);
     },
     getSearchParams() {
       return {

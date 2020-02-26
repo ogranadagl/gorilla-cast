@@ -19,8 +19,7 @@ export default {
   },
   methods: {
     async filterFavorites(term) {
-      const termSanitized = term.toLowerCase().trim();
-      this.favoriteListFiltered = filterBySearchTerm(termSanitized, this.favorites);
+      this.favoriteListFiltered = filterBySearchTerm(term, this.favorites);
     },
   },
   async mounted() {

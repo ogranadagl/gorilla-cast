@@ -18,8 +18,7 @@ export default {
   },
   methods: {
     async filterPodcasts(term) {
-      const termSanitized = term.toLowerCase().trim();
-      this.podcastListFiltered = filterBySearchTerm(termSanitized, this.podcastList);
+      this.podcastListFiltered = filterBySearchTerm(term, this.podcastList);
     },
   },
   async mounted() {
