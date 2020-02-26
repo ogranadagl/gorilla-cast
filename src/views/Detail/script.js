@@ -9,7 +9,7 @@ export default {
   },
   data() {
     return {
-      trackDetail: {},
+      track: {},
       snackbar: false,
       trackId: 0,
     };
@@ -21,9 +21,9 @@ export default {
       this.snackbar = true;
       return;
     }
-    this.trackDetail = await api.lookup(this.trackId);
-    if (isNil(this.trackDetail)) {
-      this.trackDetail = {};
+    this.track = await api.lookup(this.trackId);
+    if (isNil(this.track)) {
+      this.track = {};
       this.snackbar = true;
     }
   },

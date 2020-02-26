@@ -28,11 +28,7 @@
       <v-spacer />
       <favorite-button @click="clickFavorite" :track="track" />
       <v-btn icon>
-        <v-icon
-          @click.prevent.stop="playTrack(track)"
-          :color="track.active ? 'deep-purple accent-4' : 'grey'"
-          >mdi-play-circle-outline
-        </v-icon>
+        <v-icon @click.prevent.stop="playTrack(track)">mdi-play-circle-outline </v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>

@@ -13,7 +13,6 @@ export default {
   },
   computed: {
     tooltipText() {
-      pathOr(null, ['track', 'meta', 'favoriteId']);
       return this.getFavoriteId(this.track) ? 'Remove favorite' : 'Add favorite';
     },
   },
