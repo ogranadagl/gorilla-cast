@@ -3,14 +3,14 @@
     <h1>List All Podcasts</h1>
     <list-podcast
       :detailPath="detailPath"
-      :list="podcasts"
-      @search-track="filterPodcasts"
       :footer="false"
+      :list="podcastListFiltered"
+      @search-track="filterPodcasts"
       listWidth="90%"
     />
   </div>
 </template>
 
-<script src="./script.js"></script>
+<script src="./list-all-podcast.js"></script>
 
-<style src="./styles.scss" lang="scss" scoped></style>
+<style src="./list-all-podcast.scss" lang="scss" scoped></style>
