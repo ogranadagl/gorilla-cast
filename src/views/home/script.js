@@ -14,6 +14,8 @@ export default {
   data() {
     return {
       podcasts: [],
+      initialPodcasts: [],
+      initialFavorites: [],
       favorites: [],
       category: '',
       track: {},
@@ -26,8 +28,27 @@ export default {
     },
   },
   methods: {
-    async filterPodcasts(term) {
-      this.podcasts = await api.search(term, this.getSearchParams());
+    filterPodcasts(term) {
+      if (!term) {
+        this.podcasts = [...this.initialPodcasts];
+        return;
+      }
+
+      this.podcasts = this.initialPodcasts.filter((podcast) => {
+        const track = podcast.trackName.toLowerCase();
+        return track.includes(term.toLowerCase());
+      });
+    },
+    filterFavorites(term) {
+      if (!term) {
+        this.favorites = [...this.initialFavorites];
+        return;
+      }
+
+      this.favorites = this.initialFavorites.filter((favorite) => {
+        const track = favorite.trackName.toLowerCase();
+        return track.includes(term.toLowerCase());
+      });
     },
     getSearchParams() {
       return {
@@ -60,9 +81,10 @@ export default {
   },
   async created() {
     this.category = getRandomPodcastCategory();
-    const results = await api.search(this.category, this.getSearchParams());
-    this.podcasts = results;
-    this.track = results.shift();
-    this.favorites = api.getFavoritesTracks(maxListItems);
+    this.initialPodcasts = await api.search(this.category, this.getSearchParams());
+    this.track = this.initialPodcasts.shift();
+    this.podcasts = [...this.initialPodcasts];
+    this.initialFavorites = api.getFavoritesTracks(maxListItems);
+    this.favorites = [...this.initialFavorites];
   },
 };

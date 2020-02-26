@@ -9,6 +9,7 @@ export default {
     return {
       podcasts: [],
       detailPath: DETAIL_PATH,
+      initialPodcasts: [],
     };
   },
   components: {
@@ -16,10 +17,21 @@ export default {
   },
   methods: {
     async filterPodcasts(term) {
-      this.podcasts = await api.search(term);
+      if (!term) {
+        this.podcasts = [...this.initialPodcasts];
+        return;
+      }
+
+      this.podcasts = this.initialPodcasts.filter((podcast) => {
+        const track = podcast.trackName.toLowerCase();
+        return track.includes(term.toLowerCase());
+      });
     },
   },
   async created() {
-    this.podcasts = await api.search(this.$route.params.category || getRandomPodcastCategory());
+    this.initialPodcasts = await api.search(
+      this.$route.params.category || getRandomPodcastCategory(),
+    );
+    this.podcasts = [...this.initialPodcasts];
   },
 };

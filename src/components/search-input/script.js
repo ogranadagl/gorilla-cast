@@ -5,9 +5,6 @@ export default {
   methods: {
     change(term) {
       const parsedTerm = sanitizeText(term);
-      if (!parsedTerm) {
-        return;
-      }
       this.$emit(this.changeEvent, parsedTerm);
     },
     reset() {

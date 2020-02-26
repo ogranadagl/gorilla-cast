@@ -18,6 +18,7 @@
             :list="favorites"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
+            @search-track="filterFavorites"
             title="Favorites"
           />
         </v-col>

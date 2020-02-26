@@ -17,6 +17,10 @@ export default {
   },
   methods: {
     async searchTracks(term) {
+      if (!term) {
+        return;
+      }
+
       this.loading = true;
       const results = await api.search(term);
       this.results = results;
