@@ -15,7 +15,7 @@
           <list-podcast
             to="/favorites"
             :detailPath="detailPath"
-            :list="favorites"
+            :list="favoriteListFiltered"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
             @search-track="filterFavorites"
@@ -26,7 +26,7 @@
           <list-podcast
             :to="toList"
             :detailPath="detailPath"
-            :list="podcasts"
+            :list="podcastListFiltered"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
             @search-track="filterPodcasts"

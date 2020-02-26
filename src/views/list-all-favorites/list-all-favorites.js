@@ -23,7 +23,7 @@ export default {
       this.favoriteListFiltered = filterBySearchTerm(termSanitized, this.favorites);
     },
   },
-  async created() {
+  async mounted() {
     this.favorites = api.getFavoritesTracks(maxListItems);
     this.favoriteListFiltered = [...this.favorites];
   },

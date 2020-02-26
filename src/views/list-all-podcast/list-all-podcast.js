@@ -22,10 +22,8 @@ export default {
       this.podcastListFiltered = filterBySearchTerm(termSanitized, this.podcastList);
     },
   },
-  async created() {
-    this.podcastList = await api.search(
-      this.$route.params.category || getRandomPodcastCategory(),
-    );
+  async mounted() {
+    this.podcastList = await api.search(this.$route.params.category || getRandomPodcastCategory());
     this.podcastListFiltered = [...this.podcastList];
   },
 };
