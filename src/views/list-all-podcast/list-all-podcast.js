@@ -18,14 +18,11 @@ export default {
   },
   methods: {
     async filterPodcasts(term) {
-      const termSanitized = term.toLowerCase().trim();
-      this.podcastListFiltered = filterBySearchTerm(termSanitized, this.podcastList);
+      this.podcastListFiltered = filterBySearchTerm(term, this.podcastList);
     },
   },
-  async created() {
-    this.podcastList = await api.search(
-      this.$route.params.category || getRandomPodcastCategory(),
-    );
+  async mounted() {
+    this.podcastList = await api.search(this.$route.params.category || getRandomPodcastCategory());
     this.podcastListFiltered = [...this.podcastList];
   },
 };

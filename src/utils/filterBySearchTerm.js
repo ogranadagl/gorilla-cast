@@ -1,9 +1,11 @@
 import { compose, filter, isEmpty } from 'ramda';
 
 export const filterBySearchTerm = (term, dictionary) => {
-  if (isEmpty(term)) {
+  const termSanitized = term.toLowerCase().trim();
+  if (isEmpty(termSanitized)) {
     return [...dictionary];
   }
-
-  return compose(filter((track) => track.trackName.toLowerCase().includes(term)))(dictionary);
+  return compose(filter((track) => track.trackName.toLowerCase().includes(termSanitized)))(
+    dictionary,
+  );
 };
