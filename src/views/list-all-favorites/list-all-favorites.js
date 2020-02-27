@@ -1,7 +1,6 @@
 import { filterBySearchTerm } from '@/utils/filterBySearchTerm';
 import api from '@/api';
 import ListPodcast from '@/components/list-podcast/list-podcast.vue';
-import { DETAIL_PATH } from '@/router/index';
 
 const maxListItems = 100;
 
@@ -10,7 +9,6 @@ export default {
   data() {
     return {
       favorites: [],
-      detailPath: DETAIL_PATH,
       favoriteListFiltered: [],
     };
   },

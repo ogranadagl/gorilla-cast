@@ -50,10 +50,7 @@ export default {
       default: '100%',
     },
     to: {
-      type: String,
-    },
-    detailPath: {
-      type: String,
+      type: Object,
     },
     noContentLabel: {
       type: String,

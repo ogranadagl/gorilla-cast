@@ -12,9 +12,9 @@ const routes = [
     component: Home,
   },
   {
-    path: '/detail/:id',
-    name: 'Detail',
-    component: () => import(/* webpackChunkName: "detail" */ '../views/details/details.vue'),
+    path: '/detail/:id?',
+    name: 'detail',
+    component: () => import(/* webpackChunkName: "details" */ '../views/details/details.vue'),
   },
   {
     path: '/favorites',

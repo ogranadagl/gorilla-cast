@@ -27,7 +27,15 @@ export default {
   },
   computed: {
     toList() {
-      return `/list/${this.category}`;
+      return {
+        name: 'List',
+        params: this.category,
+      };
+    },
+    toFavorite() {
+      return {
+        path: 'favorites',
+      };
     },
   },
   methods: {

@@ -13,8 +13,7 @@
       <v-row>
         <v-col cols="12" sm="6">
           <list-podcast
-            to="/favorites"
-            :detailPath="detailPath"
+            :to="toFavorite"
             :list="favoriteListFiltered"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
@@ -25,7 +24,6 @@
         <v-col cols="12" sm="6">
           <list-podcast
             :to="toList"
-            :detailPath="detailPath"
             :list="podcastListFiltered"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"

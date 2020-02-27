@@ -1,5 +1,5 @@
 <template>
-  <v-card dark :to="`${detailPath}/${track.trackId}`">
+  <v-card dark :to="{ name: 'detail', params: {id: track.trackId}}">
     <v-card-text class="d-flex flex-no-wrap justify-space-between">
       <v-card-title class="display-1">Last podcast</v-card-title>
     </v-card-text>
