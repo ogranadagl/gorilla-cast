@@ -4,7 +4,6 @@ import recentPodcast from '@/components/recent-podcast/recent-podcast.vue';
 import api from '@/api';
 import { getRandomPodcastCategory } from '@/utils';
 import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
-import { DETAIL_PATH } from '@/router/index';
 
 import { assocPath, map } from 'ramda';
 
@@ -20,7 +19,6 @@ export default {
       favorites: [],
       category: '',
       track: {},
-      detailPath: DETAIL_PATH,
       podcastListFiltered: [],
       favoriteListFiltered: [],
     };

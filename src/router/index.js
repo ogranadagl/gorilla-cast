@@ -38,5 +38,3 @@ const router = new VueRouter({
 });
 
 export default router;
-
-export const DETAIL_PATH = 'detail';
