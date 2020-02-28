@@ -3,7 +3,7 @@
     <v-toolbar v-show="toolbar" color="green" dark>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
-      <search-input @change="searchTrack" />
+      <search-input :disabled="list.length === 0" @change="searchTrack" />
     </v-toolbar>
 
     <v-list two-line width="100%">
@@ -44,11 +44,11 @@
 
       <v-footer v-show="footer && to" color="success" class="font-weight-medium">
         <v-col class="text-right" cols="12">
-          <v-btn :to="to" text color="white">{{ moreLabel }}</v-btn>
+          <v-btn :to="to" text color="white" :disabled="list.length === 0">{{ moreLabel }}</v-btn>
         </v-col>
       </v-footer>
     </v-list>
   </v-card>
 </template>
 
-<script src="./script.js"></script>
+<script src="./list-podcast.js"></script>

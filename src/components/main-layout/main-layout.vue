@@ -1,13 +1,10 @@
 <template>
-  <v-app id="root-app">
+  <v-app class="app" id="root-app">
     <menu-drawer />
-
     <app-bar />
-
-    <v-content>
+    <v-content class="content">
       <router-view />
     </v-content>
-
     <v-footer app>
       <app-player />
     </v-footer>
@@ -15,3 +12,4 @@
 </template>
 
 <script src="./main-layout.js"></script>
+<style lang="scss" src="./main-layout.scss"></style>

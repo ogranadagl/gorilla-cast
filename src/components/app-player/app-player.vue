@@ -34,5 +34,5 @@
   </div>
 </template>
 
-<script src="./script.js"></script>
-<style lang="scss" src="./styles.scss"></style>
+<script src="./app-player.js"></script>
+<style lang="scss" src="./app-player.scss" scoped></style>

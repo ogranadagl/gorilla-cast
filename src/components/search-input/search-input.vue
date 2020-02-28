@@ -10,4 +10,4 @@
   />
 </template>
 
-<script src="./script.js"></script>
+<script src="./search-input.js"></script>

@@ -13,11 +13,12 @@
       <v-row>
         <v-col cols="12" sm="6">
           <list-podcast
-            :to="whereTo('favorites')"
             :list="favoriteListFiltered"
+            :to="whereTo('favorites')"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
             @search-track="filterFavorites"
+            noContentLabel="Please add a favorite track"
             title="Favorites"
           />
         </v-col>
