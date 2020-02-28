@@ -3,9 +3,6 @@ import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
 
 export default {
   name: 'recent-podcast',
-  data() {
-    return {};
-  },
   props: ['track'],
   methods: {
     clickFavorite(emitMessage, track) {

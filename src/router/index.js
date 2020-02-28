@@ -8,27 +8,27 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
+    name: 'dashboard',
     component: Home,
   },
   {
-    path: '/detail/:id?',
-    name: 'detail',
+    path: '/details/:id?',
+    name: 'details',
     component: () => import(/* webpackChunkName: "details" */ '../views/details/details.vue'),
   },
   {
     path: '/favorites',
-    name: 'Favorites',
+    name: 'favorites',
     component: () => import(/* webpackChunkName: "list-all-favorites" */ '../views/list-all-favorites/list-all-favorites.vue'),
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'about',
     component: () => import(/* webpackChunkName: "about" */ '../views/about/about.vue'),
   },
   {
     path: '/list/:category?',
-    name: 'List',
+    name: 'list',
     component: () => import(/* webpackChunkName: "list-all-podcast" */ '../views/list-all-podcast/list-all-podcast.vue'),
   },
 ];

@@ -5,7 +5,7 @@ import api from '@/api';
 import { getRandomPodcastCategory } from '@/utils';
 import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
 
-import { assocPath, map } from 'ramda';
+import { assocPath, map, head } from 'ramda';
 
 const maxListItems = 5;
 
@@ -26,7 +26,7 @@ export default {
   computed: {
     toList() {
       return {
-        name: 'List',
+        name: 'list',
         params: this.category,
       };
     },
@@ -75,7 +75,7 @@ export default {
   async mounted() {
     this.category = getRandomPodcastCategory();
     this.initialPodcasts = await api.search(this.category, this.getSearchParams());
-    this.track = this.initialPodcasts.shift();
+    this.track = head(this.initialPodcasts);
     this.podcasts = [...this.initialPodcasts];
     this.favorites = api.getFavoritesTracks(maxListItems);
     this.favoriteListFiltered = [...this.favorites];
