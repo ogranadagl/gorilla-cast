@@ -10,5 +10,4 @@
 </template>
 
 <script src="./app-bar.js"></script>
-
 <style lang="scss" src="./app-bar.scss" scoped></style>

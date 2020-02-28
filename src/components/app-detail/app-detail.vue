@@ -15,16 +15,12 @@
             <dl>
               <dt>Name</dt>
               <dd class="font-weight-light">{{ track.trackName }}</dd>
-
               <dt>Artist</dt>
               <dd class="font-weight-light">{{ track.artistName }}</dd>
-
               <dt>Collection</dt>
               <dd class="font-weight-light">{{ track.collectionName }}</dd>
-
               <dt>Country</dt>
               <dd class="font-weight-light">{{ track.country }}</dd>
-
               <dt>Genre</dt>
               <dd class="font-weight-light">{{ track.primaryGenreName }}</dd>
             </dl>
@@ -34,13 +30,12 @@
       <v-card-actions>
         <v-spacer />
         <favorite-button @click="clickFavorite" :track="track" />
-
         <v-btn icon>
-          <v-icon @click="playTrack(track)">mdi-play-circle-outline </v-icon>
+          <v-icon @click="playTrack(track)">mdi-play-circle-outline</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
-    <router-link class="white--text" text color="grey" to="/" v-else>
+    <router-link class="white--text" text color="grey" :to="{ name: 'dashboard' }" v-else>
       Return home
     </router-link>
   </div>

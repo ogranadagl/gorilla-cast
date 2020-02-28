@@ -35,4 +35,4 @@
 </template>
 
 <script src="./app-player.js"></script>
-<style lang="scss" src="./app-player.scss"></style>
+<style lang="scss" src="./app-player.scss" scoped></style>
