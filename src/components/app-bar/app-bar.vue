@@ -1,8 +1,7 @@
 <template>
   <v-app-bar app clipped-left dense height="60">
-    <!-- TO-DO: add drawer button here if is needed -->
     <v-toolbar-title>Gorilla Cast</v-toolbar-title>
-    <v-spacer></v-spacer>
+    <v-spacer />
     <search-lightbox class="search" />
     <v-avatar color="teal" size="30">
       <span class="white--text">GL</span>
@@ -10,6 +9,6 @@
   </v-app-bar>
 </template>
 
-<script src="./script.js"></script>
+<script src="./app-bar.js"></script>
 
-<style lang="scss" src="./styles.scss"></style>
+<style lang="scss" src="./app-bar.scss" scoped></style>
