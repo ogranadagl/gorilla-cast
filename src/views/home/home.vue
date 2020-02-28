@@ -18,6 +18,7 @@
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
             @search-track="filterFavorites"
+            noContentLabel="Please add a favorite track"
             title="Favorites"
           />
         </v-col>
