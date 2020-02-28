@@ -10,4 +10,4 @@
   </v-tooltip>
 </template>
 
-<script src="./script.js"></script>
+<script src="./favorite-button.js"></script>
