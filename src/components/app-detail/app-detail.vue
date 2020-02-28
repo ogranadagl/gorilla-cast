@@ -46,5 +46,5 @@
   </div>
 </template>
 
-<script src="./script.js"></script>
-<style lang="scss" src="./styles.scss" scoped></style>
+<script src="./app-detail.js"></script>
+<style lang="scss" src="./app-detail.scss" scoped></style>
