@@ -2,7 +2,7 @@ export default {
   name: 'MenuDrawer',
   data() {
     return {
-      drawer: null,
+      drawer: true,
       links: [
         {
           icon: 'view-dashboard-variant',
@@ -25,6 +25,7 @@ export default {
           link: '/about',
         },
       ],
+      mini: true,
     };
   },
 };

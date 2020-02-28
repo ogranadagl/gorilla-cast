@@ -4,9 +4,8 @@ import recentPodcast from '@/components/recent-podcast/recent-podcast.vue';
 import api from '@/api';
 import { getRandomPodcastCategory } from '@/utils';
 import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
-import { DETAIL_PATH } from '@/router/index';
 
-import { assocPath, map } from 'ramda';
+import { assocPath, map, head } from 'ramda';
 
 const maxListItems = 5;
 
@@ -20,15 +19,9 @@ export default {
       favorites: [],
       category: '',
       track: {},
-      detailPath: DETAIL_PATH,
       podcastListFiltered: [],
       favoriteListFiltered: [],
     };
-  },
-  computed: {
-    toList() {
-      return `/list/${this.category}`;
-    },
   },
   methods: {
     filterPodcasts(term) {
@@ -43,8 +36,7 @@ export default {
       };
     },
     updatePodcastList() {
-      // eslint-disable-next-line arrow-parens
-      const listMapper = track => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
+      const listMapper = (track) => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
       this.podcastListFiltered = map(listMapper, this.podcasts);
     },
     addFavorite(track) {
@@ -52,6 +44,17 @@ export default {
     },
     removeFavorite(track) {
       this.favoriteListFiltered = api.removeFavorite(track.meta.favoriteId, maxListItems);
+    },
+    whereTo(route) {
+      if (route === 'favorites') {
+        return {
+          path: route,
+        };
+      }
+      return {
+        name: route,
+        params: this.category,
+      };
     },
   },
   watch: {
@@ -69,7 +72,7 @@ export default {
   async mounted() {
     this.category = getRandomPodcastCategory();
     this.initialPodcasts = await api.search(this.category, this.getSearchParams());
-    this.track = this.initialPodcasts.shift();
+    this.track = head(this.initialPodcasts);
     this.podcasts = [...this.initialPodcasts];
     this.favorites = api.getFavoritesTracks(maxListItems);
     this.favoriteListFiltered = [...this.favorites];

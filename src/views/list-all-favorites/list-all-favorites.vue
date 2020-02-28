@@ -2,7 +2,6 @@
   <div class="list">
     <h1>List All Favorites</h1>
     <list-podcast
-      :detailPath="detailPath"
       :footer="false"
       :list="favoriteListFiltered"
       @search-track="filterFavorites"
