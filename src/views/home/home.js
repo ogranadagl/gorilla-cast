@@ -23,19 +23,6 @@ export default {
       favoriteListFiltered: [],
     };
   },
-  computed: {
-    toList() {
-      return {
-        name: 'list',
-        params: this.category,
-      };
-    },
-    toFavorite() {
-      return {
-        path: 'favorites',
-      };
-    },
-  },
   methods: {
     filterPodcasts(term) {
       this.podcastListFiltered = filterBySearchTerm(term, this.podcasts);
@@ -49,8 +36,7 @@ export default {
       };
     },
     updatePodcastList() {
-      // eslint-disable-next-line arrow-parens
-      const listMapper = track => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
+      const listMapper = (track) => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
       this.podcastListFiltered = map(listMapper, this.podcasts);
     },
     addFavorite(track) {
@@ -58,6 +44,17 @@ export default {
     },
     removeFavorite(track) {
       this.favoriteListFiltered = api.removeFavorite(track.meta.favoriteId, maxListItems);
+    },
+    whereTo(route) {
+      if (route === 'favorites') {
+        return {
+          path: route,
+        };
+      }
+      return {
+        name: route,
+        params: this.category,
+      };
     },
   },
   watch: {

@@ -1,6 +1,10 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app clipped :mini-variant.sync="mini"
-      permanent>
+  <v-navigation-drawer
+    :mini-variant.sync="mini"
+    app
+    clipped
+    permanent
+    v-model="drawer" >
       <v-list-item class="px-2">
         <v-list-item-avatar>
           <v-img src="@/assets/image.png"></v-img>

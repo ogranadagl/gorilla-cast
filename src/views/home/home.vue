@@ -13,7 +13,7 @@
       <v-row>
         <v-col cols="12" sm="6">
           <list-podcast
-            :to="toFavorite"
+            :to="whereTo('favorites')"
             :list="favoriteListFiltered"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
@@ -23,7 +23,7 @@
         </v-col>
         <v-col cols="12" sm="6">
           <list-podcast
-            :to="toList"
+            :to="whereTo('list')"
             :list="podcastListFiltered"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
