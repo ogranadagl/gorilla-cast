@@ -51,4 +51,4 @@
   </v-card>
 </template>
 
-<script src="./script.js"></script>
+<script src="./list-podcast.js"></script>
