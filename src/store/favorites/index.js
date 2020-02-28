@@ -3,6 +3,12 @@ const initialState = {
 };
 const getters = {
   allFavorites: (state) => state.favorites.map((favorite) => ({ ...favorite, favoriteId: true })),
+  allFavoritesLimit: (state) => (limit) => {
+    const favorites = state.favorites
+      .map((favorite) => ({ ...favorite, favoriteId: true }))
+      .slice(0, limit);
+    return favorites;
+  },
 };
 const actions = {
   addFavorite({ commit }, favorite) {

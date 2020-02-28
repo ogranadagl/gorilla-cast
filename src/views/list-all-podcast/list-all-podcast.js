@@ -21,7 +21,8 @@ export default {
       this.podcastListFiltered = mapFavoritesToList(this.favorites, this.podcastListFiltered);
     },
     filterPodcasts(term) {
-      this.podcastListFiltered = filterBySearchTerm(term, this.podcastList);
+      const podcasts = filterBySearchTerm(term, this.podcastList);
+      this.podcastListFiltered = mapFavoritesToList(this.favorites, podcasts);
     },
   },
   async mounted() {
