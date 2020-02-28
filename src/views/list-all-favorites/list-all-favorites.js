@@ -11,7 +11,6 @@ export default {
   },
   data() {
     return {
-      detailPath: DETAIL_PATH,
       favoriteListFiltered: [],
     };
   },
