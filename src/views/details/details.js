@@ -1,5 +1,5 @@
 import { isNil } from 'ramda';
-
+import { mapFavoriteTrack } from '@/utils/mapFavoritesToList';
 import api from '@/api';
 import TrackDetail from '@/components/track-detail/track-detail.vue';
 

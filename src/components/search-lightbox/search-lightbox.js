@@ -16,6 +16,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['addFavorite', 'removeFavorite']),
+    updatePodcastList() {
+      // eslint-disable-next-line arrow-parens
+      this.results = mapFavoritesToList(this.favorites, this.results);
+    },
     async searchTracks(term) {
       if (!term) {
         return;
@@ -23,12 +28,21 @@ export default {
 
       this.loading = true;
       const results = await api.search(term);
-      this.results = results;
+      this.results = mapFavoritesToList(this.favorites, results);
       this.dialog = results.length > 0;
       this.loading = false;
     },
   },
+  computed: {
+    ...mapGetters({ favorites: 'allFavorites' }),
+  },
   watch: {
+    favorites: {
+      handler() {
+        this.updatePodcastList();
+      },
+      deep: true,
+    },
     dialog(value) {
       if (!value) {
         this.loading = false;

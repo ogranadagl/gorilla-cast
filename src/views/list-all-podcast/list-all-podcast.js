@@ -15,12 +15,17 @@ export default {
     };
   },
   methods: {
-    async filterPodcasts(term) {
+    ...mapActions(['addFavorite', 'removeFavorite']),
+    updatePodcastList() {
+      // eslint-disable-next-line arrow-parens
+      this.podcastListFiltered = mapFavoritesToList(this.favorites, this.podcastListFiltered);
+    },
+    filterPodcasts(term) {
       this.podcastListFiltered = filterBySearchTerm(term, this.podcastList);
     },
   },
   async mounted() {
     this.podcastList = await api.search(this.$route.params.category || getRandomPodcastCategory());
-    this.podcastListFiltered = [...this.podcastList];
+    this.podcastListFiltered = mapFavoritesToList(this.favorites, this.podcastList);
   },
 };
