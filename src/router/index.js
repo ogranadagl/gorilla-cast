@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/details/:id',
     name: 'details',
-    component: () => import(/* webpackChunkName: "details" */ '../views/details/details.vue'),
+    component: () => import('../views/details/details.vue'),
   },
   {
     path: '/favorites',
@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/about/about.vue'),
+    component: () => import('../views/about/about.vue'),
   },
   {
     path: '/podcasts/:category?',

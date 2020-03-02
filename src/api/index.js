@@ -47,7 +47,11 @@ class Api {
     this._state = readLocalStorage(KeyNames.state, DEFAULT_STATE);
 
     this.mapMetaProperty = map(track =>
+<<<<<<< HEAD
       assocPath(['meta', 'favoriteId'], this.favoriteId(track), track),
+=======
+      assocPath(['meta', 'favoriteId'], this.favoriteId(track), track)
+>>>>>>> Fixing code review
     );
   }
 
@@ -91,7 +95,7 @@ class Api {
     return compose(
       this.mapMetaProperty,
       isStreamable,
-      take(limit), // Helpfull when data is mocked
+      take(limit) // Helpfull when data is mocked
     )(results);
   }
 
@@ -114,7 +118,7 @@ class Api {
     return compose(
       head,
       ifElse(isNil, () => ({}), this.mapMetaProperty),
-      filter(propEq('trackId', trackId)),
+      filter(propEq('trackId', trackId))
     )(results);
   }
 
@@ -135,7 +139,7 @@ class Api {
       take(n || Infinity),
       this.mapMetaProperty,
       map(prop('track')),
-      this.getFavorites.bind(this),
+      this.getFavorites.bind(this)
     )();
   }
 
@@ -210,7 +214,7 @@ class Api {
     return compose(
       map(omit(['track'])),
       filter(pathEq(['track', 'trackId'], trackId)),
-      this.getReviews.bind(this),
+      this.getReviews.bind(this)
     )();
   }
 
@@ -295,7 +299,7 @@ class Api {
       propOr(null, 'id'),
       head,
       filter(pathEq(['track', 'trackId'], prop('trackId', track))),
-      this.getFavorites.bind(this),
+      this.getFavorites.bind(this)
     )(track);
   }
 }

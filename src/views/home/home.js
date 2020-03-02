@@ -58,6 +58,7 @@ export default {
     },
   },
   async mounted() {
+    this.$store.dispatch('favorites/fetchFavorites');
     this.category = getRandomPodcastCategory();
     this.podcasts = await api.search(this.category, DEFAULT_PODCAST_FILTER_PARAMS);
     this.favorites = api.getFavoritesTracks(MAX_LIST_ITEMS);

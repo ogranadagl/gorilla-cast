@@ -15,9 +15,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['addFavorite', 'removeFavorite']),
+    ...addAndRemove(),
     updatePodcastList() {
-      // eslint-disable-next-line arrow-parens
       this.podcastListFiltered = mapFavoritesToList(this.favorites, this.podcastListFiltered);
     },
     filterPodcasts(term) {
@@ -26,7 +25,11 @@ export default {
     },
   },
   async mounted() {
-    this.podcastList = await api.search(this.$route.params.category || getRandomPodcastCategory());
+    this.$store.dispatch('favorites/fetchFavorites');
+    this.podcastList = await api.search(
+      this.$route.params.category || getRandomPodcastCategory(),
+      true
+    );
     this.podcastListFiltered = mapFavoritesToList(this.favorites, this.podcastList);
   },
 };

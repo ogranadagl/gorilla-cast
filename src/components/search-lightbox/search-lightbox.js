@@ -16,9 +16,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['addFavorite', 'removeFavorite']),
+    ...addAndRemove(),
     updatePodcastList() {
-      // eslint-disable-next-line arrow-parens
       this.results = mapFavoritesToList(this.favorites, this.results);
     },
     async searchTracks(term) {
@@ -34,7 +33,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({ favorites: 'allFavorites' }),
+    ...allFavorites(),
   },
   watch: {
     favorites: {
