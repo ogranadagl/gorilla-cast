@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import favorites from './favorites';
+import favorites from './modules/favorites';
 
 Vue.use(Vuex);
 
