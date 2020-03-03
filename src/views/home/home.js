@@ -36,7 +36,7 @@ export default {
       };
     },
     updatePodcastList() {
-      const listMapper = (track) => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
+      const listMapper = track => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
       this.podcastListFiltered = map(listMapper, this.podcasts);
     },
     addFavorite(track) {

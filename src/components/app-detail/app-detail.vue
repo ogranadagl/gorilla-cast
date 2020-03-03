@@ -29,13 +29,13 @@
       </v-container>
       <v-card-actions>
         <v-spacer />
-        <favorite-button @click="clickFavorite" :track="track" />
+        <favorite-button :track="track" @click="clickFavorite" />
         <v-btn icon>
           <v-icon @click="playTrack(track)">mdi-play-circle-outline</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
-    <router-link class="white--text" text color="grey" :to="{ name: 'dashboard' }" v-else>
+    <router-link v-else class="white--text" text color="grey" :to="{ name: 'dashboard' }">
       Return home
     </router-link>
   </div>

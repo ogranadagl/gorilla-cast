@@ -1940,10 +1940,14 @@ export const lookupData = {
   artistViewUrl: 'https://music.apple.com/us/artist/bruno-mars/278873078?uo=4',
   collectionViewUrl: 'https://music.apple.com/us/album/gorilla/573962245?i=573962552&uo=4',
   trackViewUrl: 'https://music.apple.com/us/album/gorilla/573962245?i=573962552&uo=4',
-  previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/Music/v4/e8/35/d7/e835d7c3-509d-7eb9-c671-9c24fcc6d3a9/mzaf_2404916125251718945.plus.aac.p.m4a',
-  artworkUrl30: 'https://is3-ssl.mzstatic.com/image/thumb/Music/v4/35/b8/aa/35b8aab0-d693-e316-4a46-e22eed3126ba/source/30x30bb.jpg',
-  artworkUrl60: 'https://is3-ssl.mzstatic.com/image/thumb/Music/v4/35/b8/aa/35b8aab0-d693-e316-4a46-e22eed3126ba/source/60x60bb.jpg',
-  artworkUrl100: 'https://is3-ssl.mzstatic.com/image/thumb/Music/v4/35/b8/aa/35b8aab0-d693-e316-4a46-e22eed3126ba/source/100x100bb.jpg',
+  previewUrl:
+    'https://audio-ssl.itunes.apple.com/itunes-assets/Music/v4/e8/35/d7/e835d7c3-509d-7eb9-c671-9c24fcc6d3a9/mzaf_2404916125251718945.plus.aac.p.m4a',
+  artworkUrl30:
+    'https://is3-ssl.mzstatic.com/image/thumb/Music/v4/35/b8/aa/35b8aab0-d693-e316-4a46-e22eed3126ba/source/30x30bb.jpg',
+  artworkUrl60:
+    'https://is3-ssl.mzstatic.com/image/thumb/Music/v4/35/b8/aa/35b8aab0-d693-e316-4a46-e22eed3126ba/source/60x60bb.jpg',
+  artworkUrl100:
+    'https://is3-ssl.mzstatic.com/image/thumb/Music/v4/35/b8/aa/35b8aab0-d693-e316-4a46-e22eed3126ba/source/100x100bb.jpg',
   collectionPrice: 4.99,
   trackPrice: 1.29,
   releaseDate: '2012-12-07T08:00:00Z',

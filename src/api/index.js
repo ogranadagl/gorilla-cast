@@ -26,13 +26,7 @@ import queryString from 'query-string';
 import uuidv4 from 'uuid/v4';
 
 import { favoritesSchema, reviewSchema } from './normalizr';
-import {
-  API_ENDPOINT,
-  DEFAULT_STATE,
-  KeyNames,
-  lookupData,
-  searchData,
-} from './constants';
+import { API_ENDPOINT, DEFAULT_STATE, KeyNames, lookupData, searchData } from './constants';
 import {
   isNotValidSearchOptions,
   isStreamable,
@@ -52,7 +46,9 @@ class Api {
   constructor() {
     this._state = readLocalStorage(KeyNames.state, DEFAULT_STATE);
 
-    this.mapMetaProperty = map((track) => assocPath(['meta', 'favoriteId'], this.favoriteId(track), track));
+    this.mapMetaProperty = map(track =>
+      assocPath(['meta', 'favoriteId'], this.favoriteId(track), track),
+    );
   }
 
   /**
@@ -184,7 +180,7 @@ class Api {
   removeFavorite(id, n) {
     validateEmptyKey(id, 'id');
 
-    const favorites = reject((favoriteId) => favoriteId === id, this.state.favorites);
+    const favorites = reject(favoriteId => favoriteId === id, this.state.favorites);
 
     this.state = {
       ...this.state,
@@ -263,7 +259,7 @@ class Api {
   removeReview(id) {
     validateEmptyKey(id, 'id');
 
-    const reviews = reject((reviewId) => reviewId === id, this.state.reviews);
+    const reviews = reject(reviewId => reviewId === id, this.state.reviews);
 
     this.state = {
       ...this.state,

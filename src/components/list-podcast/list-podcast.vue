@@ -9,7 +9,7 @@
     <v-list two-line width="100%">
       <v-list-item-group v-if="list.length > 0" v-model="selected">
         <template v-for="(item, index) in list">
-          <v-list-item :key="item.trackId" :to="{ name: 'details', params: {id: item.trackId}}">
+          <v-list-item :key="item.trackId" :to="{ name: 'details', params: { id: item.trackId } }">
             <v-list-item-action>
               <v-list-item-avatar>
                 <v-img :alt="item.trackName" :src="item.artworkUrl30" />
@@ -22,7 +22,7 @@
             </v-list-item-content>
 
             <v-list-item-action>
-              <favorite-button @click="clickFavorite" :track="item" />
+              <favorite-button :track="item" @click="clickFavorite" />
             </v-list-item-action>
 
             <v-list-item-action>

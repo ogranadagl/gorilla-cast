@@ -10,23 +10,18 @@
         <v-list-item-subtitle>{{ getSongInfo }}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <v-slider
-      :readonly="true"
-      :max="duration"
-      :value="sliderTime"
-      :label="currentTime"
-    />
+    <v-slider :readonly="true" :max="duration" :value="sliderTime" :label="currentTime" />
     <v-card-actions class="AppPlayer-actions">
-      <v-btn text outlined @click="goBackward10Seconds" :disabled="!isPlayEnabled">
+      <v-btn text outlined :disabled="!isPlayEnabled" @click="goBackward10Seconds">
         <v-icon>mdi-rewind-10</v-icon>
       </v-btn>
-      <v-btn text outlined @click="togglePlayTrack" v-if="!isPlaying" :disabled="!isPlayEnabled">
+      <v-btn v-if="!isPlaying" text outlined :disabled="!isPlayEnabled" @click="togglePlayTrack">
         <v-icon>mdi-play</v-icon>
       </v-btn>
-      <v-btn text outlined @click="togglePlayTrack" v-if="isPlaying">
+      <v-btn v-if="isPlaying" text outlined @click="togglePlayTrack">
         <v-icon>mdi-pause</v-icon>
       </v-btn>
-      <v-btn text outlined @click="goForward10Seconds" :disabled="!isPlayEnabled">
+      <v-btn text outlined :disabled="!isPlayEnabled" @click="goForward10Seconds">
         <v-icon>mdi-fast-forward-10</v-icon>
       </v-btn>
     </v-card-actions>

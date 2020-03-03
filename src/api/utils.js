@@ -1,13 +1,4 @@
-import {
-  all,
-  compose,
-  filter,
-  flip,
-  includes,
-  keys,
-  not,
-  propEq,
-} from 'ramda';
+import { all, compose, filter, flip, includes, keys, not, propEq } from 'ramda';
 
 import { SEARCH_ALLOWED_PARAMETERS } from './constants';
 

@@ -4,10 +4,10 @@
     <list-podcast
       :footer="false"
       :list="favoriteListFiltered"
-      @search-track="filterFavorites"
-      listWidth="90%"
-      noContentLabel="Favorite list is empty"
+      list-width="90%"
+      no-content-label="Favorite list is empty"
       title=""
+      @search-track="filterFavorites"
     />
   </div>
 </template>

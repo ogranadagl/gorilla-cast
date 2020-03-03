@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app" id="root-app">
+  <v-app id="root-app" class="app">
     <menu-drawer />
     <app-bar />
     <v-content class="content">

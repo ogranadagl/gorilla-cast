@@ -1,27 +1,23 @@
 <template>
   <div>
     <search-input
-      @change="searchTracks"
+      ref="searchInput"
       :disabled="loading"
       :loading="dialog"
-      ref="searchInput"
       solo
+      @change="searchTracks"
     />
     <v-dialog
+      v-model="dialog"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
-      v-model="dialog"
       width="600px"
     >
       <v-card>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            @click="dialog = false"
-            color="green darken-1"
-            text
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">
             Close
           </v-btn>
         </v-card-actions>
@@ -29,7 +25,7 @@
           <span class="headline">Results</span>
         </v-card-title>
         <v-card-text>
-          <list-podcast :list="results" :toolbar="false" :footer="false"/>
+          <list-podcast :list="results" :toolbar="false" :footer="false" />
         </v-card-text>
       </v-card>
     </v-dialog>

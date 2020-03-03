@@ -15,11 +15,11 @@
           <list-podcast
             :list="favoriteListFiltered"
             :to="whereTo('favorites')"
+            no-content-label="Please add a favorite track"
+            title="Favorites"
             @add-favorite="addFavorite"
             @remove-favorite="removeFavorite"
             @search-track="filterFavorites"
-            noContentLabel="Please add a favorite track"
-            title="Favorites"
           />
         </v-col>
         <v-col cols="12" sm="6">

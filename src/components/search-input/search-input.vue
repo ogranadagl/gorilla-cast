@@ -1,12 +1,12 @@
 <template>
   <v-text-field
+    ref="field"
     :label="label"
-    @change="change"
     append-icon="mdi-magnify"
     color="white"
     hide-details
-    ref="field"
     v-bind="$attrs"
+    @change="change"
   />
 </template>
 

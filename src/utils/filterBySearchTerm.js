@@ -5,7 +5,7 @@ export const filterBySearchTerm = (term, dictionary) => {
   if (isEmpty(termSanitized)) {
     return [...dictionary];
   }
-  return compose(filter((track) => track.trackName.toLowerCase().includes(termSanitized)))(
+  return compose(filter(track => track.trackName.toLowerCase().includes(termSanitized)))(
     dictionary,
   );
 };
