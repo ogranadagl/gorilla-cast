@@ -24,7 +24,6 @@ export default {
       favoriteSearch: '',
       podcasts: [],
       podcastSearch: '',
-      track: {},
     };
   },
   computed: {
@@ -33,6 +32,9 @@ export default {
     },
     favoriteListFiltered() {
       return filterBySearchTerm(this.favoriteSearch, this.favorites);
+    },
+    track() {
+      return head(this.podcasts) || {};
     },
   },
   methods: {
@@ -51,7 +53,6 @@ export default {
     favorites: {
       handler() {
         this.updatePodcastList();
-        this.track = head(this.podcasts);
       },
       deep: true,
     },
@@ -60,6 +61,5 @@ export default {
     this.category = getRandomPodcastCategory();
     this.podcasts = await api.search(this.category, DEFAULT_PODCAST_FILTER_PARAMS);
     this.favorites = api.getFavoritesTracks(MAX_LIST_ITEMS);
-    this.track = head(this.podcasts);
   },
 };
