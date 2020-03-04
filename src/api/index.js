@@ -21,9 +21,9 @@ import {
   uniq,
 } from 'ramda';
 import { denormalize, normalize } from 'normalizr';
+import { v4 as uuidv4 } from 'uuid';
 import deepmerge from 'deepmerge';
 import queryString from 'query-string';
-import uuidv4 from 'uuid/v4';
 
 import { favoritesSchema, reviewSchema } from './normalizr';
 import { API_ENDPOINT, DEFAULT_STATE, KeyNames, lookupData, searchData } from './constants';

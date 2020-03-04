@@ -1,12 +1,12 @@
 import api from '@/api';
-import ListPodcast from '@/components/list-podcast/list-podcast.vue';
 import SearchInput from '@/components/search-input/search-input.vue';
+import TrackList from '@/components/track-list/track-list.vue';
 
 export default {
   name: 'SearchLightbox',
   components: {
-    ListPodcast,
     SearchInput,
+    TrackList,
   },
   data() {
     return {
@@ -35,6 +35,9 @@ export default {
         this.results = [];
         this.$refs.searchInput.reset();
       }
+    },
+    $route() {
+      this.dialog = false;
     },
   },
 };

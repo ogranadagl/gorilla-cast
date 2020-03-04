@@ -1,81 +1,65 @@
+import { assocPath, head, map } from 'ramda';
+
 import { filterBySearchTerm } from '@/utils/filterBySearchTerm';
-import ListPodcast from '@/components/list-podcast/list-podcast.vue';
-import recentPodcast from '@/components/recent-podcast/recent-podcast.vue';
+import { getRandomPodcastCategory } from '@/utils/getRandomPodcastCategory';
 import api from '@/api';
-import { getRandomPodcastCategory } from '@/utils';
-import { DEFAULT_PODCAST_FILTER_PARAMS } from '@/utils/constants';
+import TrackDetail from '@/components/track-detail/track-detail.vue';
+import TrackList from '@/components/track-list/track-list.vue';
 
-import { assocPath, map, head } from 'ramda';
-
-const maxListItems = 5;
+const MAX_LIST_ITEMS = 5;
+const DEFAULT_PODCAST_FILTER_PARAMS = {
+  limit: 5,
+};
 
 export default {
   name: 'Home',
+  components: {
+    TrackDetail,
+    TrackList,
+  },
   data() {
     return {
-      podcasts: [],
-      initialPodcasts: [],
-      initialFavorites: [],
-      favorites: [],
       category: '',
+      favorites: [],
+      favoriteSearch: '',
+      podcasts: [],
+      podcastSearch: '',
       track: {},
-      podcastListFiltered: [],
-      favoriteListFiltered: [],
     };
   },
+  computed: {
+    podcastListFiltered() {
+      return filterBySearchTerm(this.podcastSearch, this.podcasts);
+    },
+    favoriteListFiltered() {
+      return filterBySearchTerm(this.favoriteSearch, this.favorites);
+    },
+  },
   methods: {
-    filterPodcasts(term) {
-      this.podcastListFiltered = filterBySearchTerm(term, this.podcasts);
-    },
-    async filterFavorites(term) {
-      this.favoriteListFiltered = filterBySearchTerm(term, this.favorites);
-    },
-    getSearchParams() {
-      return {
-        ...DEFAULT_PODCAST_FILTER_PARAMS,
-      };
-    },
     updatePodcastList() {
       const listMapper = track => assocPath(['meta', 'favoriteId'], api.favoriteId(track), track);
-      this.podcastListFiltered = map(listMapper, this.podcasts);
+      this.podcasts = map(listMapper, this.podcasts);
     },
     addFavorite(track) {
-      this.favoriteListFiltered = api.addFavorite(track, maxListItems);
+      this.favorites = api.addFavorite(track, MAX_LIST_ITEMS);
     },
     removeFavorite(track) {
-      this.favoriteListFiltered = api.removeFavorite(track.meta.favoriteId, maxListItems);
-    },
-    whereTo(route) {
-      if (route === 'favorites') {
-        return {
-          path: route,
-        };
-      }
-      return {
-        name: route,
-        params: this.category,
-      };
+      this.favorites = api.removeFavorite(track.meta.favoriteId, MAX_LIST_ITEMS);
     },
   },
   watch: {
     favorites: {
       handler() {
         this.updatePodcastList();
+        this.track = head(this.podcasts);
       },
       deep: true,
     },
   },
-  components: {
-    ListPodcast,
-    recentPodcast,
-  },
   async mounted() {
     this.category = getRandomPodcastCategory();
-    this.initialPodcasts = await api.search(this.category, this.getSearchParams());
-    this.track = head(this.initialPodcasts);
-    this.podcasts = [...this.initialPodcasts];
-    this.favorites = api.getFavoritesTracks(maxListItems);
-    this.favoriteListFiltered = [...this.favorites];
-    this.podcastListFiltered = [...this.podcasts];
+    this.podcasts = await api.search(this.category, DEFAULT_PODCAST_FILTER_PARAMS);
+    this.favorites = api.getFavoritesTracks(MAX_LIST_ITEMS);
+    this.track = head(this.podcasts);
   },
 };

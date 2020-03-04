@@ -1,14 +1,22 @@
-import SearchInput from '@/components/search-input/search-input.vue';
-import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
 import { MESSAGE_PLAY_TRACK, MESSAGE_SEARCH_TRACK } from '@/utils/constants';
+import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
+import SearchInput from '@/components/search-input/search-input.vue';
 
 export default {
-  name: 'ListPodcast',
+  name: 'TrackList',
+  components: {
+    FavoriteButton,
+    SearchInput,
+  },
   data() {
     return {
       selected: false,
-      prefix: 'divider-',
     };
+  },
+  computed: {
+    disabled() {
+      return this.list.length === 0;
+    },
   },
   methods: {
     getSubTitle(artistName, genreName) {
@@ -27,7 +35,9 @@ export default {
   props: {
     list: {
       type: Array,
-      default: () => [],
+      default() {
+        return [];
+      },
     },
     title: {
       type: String,
@@ -56,9 +66,5 @@ export default {
       type: String,
       default: 'There is nothing to show.',
     },
-  },
-  components: {
-    FavoriteButton,
-    SearchInput,
   },
 };

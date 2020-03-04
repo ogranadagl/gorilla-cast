@@ -1,4 +1,4 @@
-import { isEmpty, pathOr } from 'ramda';
+import { pathOr } from 'ramda';
 
 import { MESSAGE_ADD_FAVORITE, MESSAGE_REMOVE_FAVORITE } from '@/utils/constants';
 
@@ -6,30 +6,25 @@ export default {
   name: 'FavoriteButton',
   props: {
     track: {
-      type: Object,
+      default() {
+        return {};
+      },
       required: true,
-      default: {},
+      type: Object,
     },
   },
   computed: {
+    isActive() {
+      return pathOr(null, ['meta', 'favoriteId'], this.track);
+    },
     tooltipText() {
-      return this.getFavoriteId(this.track) ? 'Remove favorite' : 'Add favorite';
+      return this.isActive ? 'Remove favorite' : 'Add favorite';
     },
   },
   methods: {
-    handleToggleFavorite() {
-      if (isEmpty(this.track)) {
-        return;
-      }
-
-      const emitMessage = this.getFavoriteId(this.track)
-        ? MESSAGE_REMOVE_FAVORITE
-        : MESSAGE_ADD_FAVORITE;
-
+    click() {
+      const emitMessage = this.isActive ? MESSAGE_REMOVE_FAVORITE : MESSAGE_ADD_FAVORITE;
       this.$emit('click', emitMessage, this.track);
-    },
-    getFavoriteId(track) {
-      return pathOr(null, ['meta', 'favoriteId'], track);
     },
   },
 };

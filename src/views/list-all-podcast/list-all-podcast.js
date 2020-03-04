@@ -1,18 +1,18 @@
 import { filterBySearchTerm } from '@/utils/filterBySearchTerm';
-import { getRandomPodcastCategory } from '@/utils';
+import { getRandomPodcastCategory } from '@/utils/getRandomPodcastCategory';
 import api from '@/api';
-import ListPodcast from '@/components/list-podcast/list-podcast.vue';
+import TrackList from '@/components/track-list/track-list.vue';
 
 export default {
   name: 'ListAllPodcast',
+  components: {
+    TrackList,
+  },
   data() {
     return {
       podcastList: [],
       podcastListFiltered: [],
     };
-  },
-  components: {
-    ListPodcast,
   },
   methods: {
     async filterPodcasts(term) {

@@ -1,5 +1,5 @@
-import ARTWORK_IMAGE from '@/assets/image.png';
-import { dateTimeToPlayTime } from '@/utils';
+import ARTWORK_PLACEHOLDER from '@/assets/artwork-placeholder.png';
+import { dateTimeToPlayTime } from '@/utils/dateTimeToPlayTime';
 import { MESSAGE_PLAY_TRACK, UPDATE_INTERVAL, TIME_OFFSET_10 } from '@/utils/constants';
 
 /* Base information to be used as track information */
@@ -9,11 +9,11 @@ const TRACK_INFO = {
   collectionName: '',
   trackName: '',
   previewUrl: null,
-  artworkUrl100: ARTWORK_IMAGE,
+  artworkUrl100: ARTWORK_PLACEHOLDER,
 };
 
 export default {
-  name: 'AppPlayer',
+  name: 'Player',
   data() {
     return {
       isPlaying: false,
