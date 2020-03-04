@@ -5,7 +5,9 @@
       <track-list
         :footer="false"
         :list="podcastListFiltered"
-        @search="filterPodcasts"
+        @search="podcastSearch=$event"
+        @add-favorite="addFavorite"
+        @remove-favorite="removeFavorite"
         list-width="90%"
         no-content-label="Podcasts list is empty"
         title=""

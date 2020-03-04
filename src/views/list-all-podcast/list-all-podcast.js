@@ -2,6 +2,8 @@ import { filterBySearchTerm } from '@/utils/filterBySearchTerm';
 import { getRandomPodcastCategory } from '@/utils/getRandomPodcastCategory';
 import api from '@/api';
 import TrackList from '@/components/track-list/track-list.vue';
+import { addAndRemove, allFavorites } from '@/store/modules/favorites/utils';
+import { mapFavoritesToList } from '@/utils/mapFavoritesToList';
 
 export default {
   name: 'ListAllPodcast',
@@ -11,16 +13,34 @@ export default {
   data() {
     return {
       podcastList: [],
-      podcastListFiltered: [],
+      podcastSearch: '',
     };
   },
   methods: {
-    async filterPodcasts(term) {
-      this.podcastListFiltered = filterBySearchTerm(term, this.podcastList);
+    ...addAndRemove(),
+    updatePodcastList() {
+      this.podcastList = mapFavoritesToList(this.favorites, this.podcastList);
     },
   },
+  watch: {
+    favorites: {
+      handler() {
+        this.updatePodcastList();
+      },
+      deep: true,
+    },
+  },
+  computed: {
+    podcastListFiltered() {
+      return filterBySearchTerm(this.podcastSearch, this.podcastList);
+    },
+    ...allFavorites(),
+  },
   async mounted() {
-    this.podcastList = await api.search(this.$route.params.category || getRandomPodcastCategory());
-    this.podcastListFiltered = [...this.podcastList];
+    this.$store.dispatch('favorites/fetchFavorites');
+    this.podcastList = await api.search(
+      this.$route.params.category || getRandomPodcastCategory(),
+      true,
+    );
   },
 };

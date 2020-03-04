@@ -41,7 +41,7 @@ export function validateEmptyKey(value, key) {
 export const isNotValidSearchOptions = compose(
   not,
   all(flip(includes)(SEARCH_ALLOWED_PARAMETERS)),
-  keys,
+  keys
 );
 
 export const isStreamable = filter(propEq('isStreamable', true));
