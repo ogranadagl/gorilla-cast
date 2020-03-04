@@ -19,7 +19,10 @@ const routes = [
   {
     path: '/favorites',
     name: 'favorites',
-    component: () => import(/* webpackChunkName: "list-all-favorites" */ '../views/list-all-favorites/list-all-favorites.vue'),
+    component: () =>
+      import(
+        /* webpackChunkName: "list-all-favorites" */ '../views/list-all-favorites/list-all-favorites.vue'
+      ),
   },
   {
     path: '/about',
@@ -27,9 +30,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/about/about.vue'),
   },
   {
-    path: '/list/:category?',
-    name: 'list',
-    component: () => import(/* webpackChunkName: "list-all-podcast" */ '../views/list-all-podcast/list-all-podcast.vue'),
+    path: '/podcasts/:category?',
+    name: 'podcasts',
+    component: () =>
+      import(
+        /* webpackChunkName: "list-all-podcast" */ '../views/list-all-podcast/list-all-podcast.vue'
+      ),
   },
 ];
 

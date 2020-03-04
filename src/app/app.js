@@ -4,9 +4,6 @@ export default {
   components: {
     MainLayout,
   },
-  data: () => ({
-    drawer: null,
-  }),
   created() {
     this.$vuetify.theme.dark = true;
   },

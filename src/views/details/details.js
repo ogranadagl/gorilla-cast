@@ -1,14 +1,12 @@
-/* eslint-disable no-restricted-globals */
-
 import { isNil } from 'ramda';
 
 import api from '@/api';
-import AppDetail from '@/components/app-detail/app-detail.vue';
+import TrackDetail from '@/components/track-detail/track-detail.vue';
 
 export default {
   name: 'Detail',
   components: {
-    AppDetail,
+    TrackDetail,
   },
   data() {
     return {
@@ -17,16 +15,28 @@ export default {
       trackId: 0,
     };
   },
-  async mounted() {
-    this.trackId = Number(this.$route.params.id);
-    if (isNaN(this.trackId)) {
-      this.snackbar = true;
-      return;
-    }
-    this.track = await api.lookup(this.trackId);
-    if (isNil(this.track)) {
+  methods: {
+    async fetchData() {
+      this.trackId = Number(this.$route.params.id);
+      this.snackbar = false;
+      if (isNaN(this.trackId)) {
+        this.snackbar = true;
+        return;
+      }
+      this.track = await api.lookup(this.trackId);
+      if (isNil(this.track)) {
+        this.track = {};
+        this.snackbar = true;
+      }
+    },
+  },
+  mounted() {
+    this.fetchData();
+  },
+  watch: {
+    $route() {
       this.track = {};
-      this.snackbar = true;
-    }
+      this.fetchData();
+    },
   },
 };

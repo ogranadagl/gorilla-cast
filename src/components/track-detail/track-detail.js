@@ -2,23 +2,29 @@ import { MESSAGE_PLAY_TRACK } from '@/utils/constants';
 import FavoriteButton from '@/components/favorite-button/favorite-button.vue';
 
 export default {
-  name: 'app-detail',
+  name: 'track-detail',
+  components: {
+    FavoriteButton,
+  },
   props: {
     track: {
-      default: {},
+      default() {
+        return {};
+      },
       required: true,
       type: Object,
+    },
+    full: {
+      default: true,
+      type: Boolean,
     },
   },
   methods: {
     clickFavorite(emitMessage, track) {
       this.$emit(emitMessage, track);
     },
-    playTrack() {
+    play() {
       this.$root.$emit(MESSAGE_PLAY_TRACK, this.track);
     },
-  },
-  components: {
-    FavoriteButton,
   },
 };

@@ -1,0 +1,31 @@
+<div>
+  <search-input
+    :disabled="loading"
+    :loading="dialog"
+    @change="searchTracks"
+    ref="searchInput"
+    solo
+  />
+  <v-dialog
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+    v-model="dialog"
+    width="600px"
+  >
+    <v-card>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn color="green darken-1" text @click="dialog = false">
+          Close
+        </v-btn>
+      </v-card-actions>
+      <v-card-title>
+        <span class="headline">Results</span>
+      </v-card-title>
+      <v-card-text>
+        <track-list :footer="false" :list="results" :toolbar="false" />
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+</div>
