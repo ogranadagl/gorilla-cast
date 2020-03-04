@@ -1,8 +1,6 @@
 import { filterBySearchTerm } from '@/utils/filterBySearchTerm';
-import api from '@/api';
 import TrackList from '@/components/track-list/track-list.vue';
-
-const MAX_LIST_ITEMS = 100;
+import { addAndRemove, allFavorites } from '@/store/modules/favorites/utils';
 
 export default {
   name: 'ListAllFavorites',
@@ -14,13 +12,28 @@ export default {
       favoriteListFiltered: [],
     };
   },
+  computed: {
+    ...allFavorites(),
+  },
   methods: {
+    ...addAndRemove(),
     filterFavorites(term) {
       this.favoriteListFiltered = filterBySearchTerm(term, this.favorites);
     },
+    updatePodcastList() {
+      this.favoriteListFiltered = this.favorites;
+    },
+  },
+  watch: {
+    favorites: {
+      handler() {
+        this.updatePodcastList();
+      },
+      deep: true,
+    },
   },
   async mounted() {
-    this.favorites = api.getFavoritesTracks(MAX_LIST_ITEMS);
+    this.$store.dispatch('favorites/fetchFavorites');
     this.favoriteListFiltered = [...this.favorites];
   },
 };

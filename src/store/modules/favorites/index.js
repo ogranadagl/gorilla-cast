@@ -5,6 +5,7 @@ import {
   FETCH_FAVORITES,
   SET_FAVORITES,
   ALL_FAVORITES,
+  ALL_FAVORITES_LIMIT,
 } from './types';
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
 };
 const getters = {
   [ALL_FAVORITES]: state => state.favorites.map(favorite => ({ ...favorite, favoriteId: true })),
-  allFavoritesLimit: state => limit => {
+  [ALL_FAVORITES_LIMIT]: state => limit => {
     const favorites = state.favorites
       .map(favorite => ({ ...favorite, favoriteId: true }))
       .slice(0, limit);
@@ -42,7 +43,7 @@ const mutations = {
   },
   [REMOVE_FAVORITE]: (state, favorite) => {
     state.favorites = state.favorites.filter(
-      currentFavorite => currentFavorite.trackId !== favorite.trackId
+      currentFavorite => currentFavorite.trackId !== favorite.trackId,
     );
   },
 };

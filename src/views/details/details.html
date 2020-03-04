@@ -7,7 +7,11 @@
   </v-snackbar>
   <v-row v-if="!snackbar" dense>
     <v-col cols="12">
-      <track-detail :track="track" />
+      <track-detail
+        @add-favorite="addFavorite"
+        @remove-favorite="removeFavorite"
+        :track="track"
+      />
     </v-col>
   </v-row>
 </v-container>

@@ -6,6 +6,8 @@
         :footer="false"
         :list="favoriteListFiltered"
         @search="filterFavorites"
+        @add-favorite="addFavorite"
+        @remove-favorite="removeFavorite"
         list-width="90%"
         no-content-label="Favorite list is empty"
         title=""

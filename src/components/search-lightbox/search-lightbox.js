@@ -1,6 +1,8 @@
 import api from '@/api';
 import SearchInput from '@/components/search-input/search-input.vue';
 import TrackList from '@/components/track-list/track-list.vue';
+import { mapFavoritesToList } from '@/utils/mapFavoritesToList';
+import { addAndRemove, allFavorites } from '@/store/modules/favorites/utils';
 
 export default {
   name: 'SearchLightbox',

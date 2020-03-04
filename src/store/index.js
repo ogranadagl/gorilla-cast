@@ -5,8 +5,7 @@ import favorites from './modules/favorites';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: {
+    favorites,
+  },
 });
