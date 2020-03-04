@@ -19,26 +19,23 @@
   />
   <v-card-actions class="AppPlayer-actions">
     <v-btn
-      :disabled="!isPlayEnabled"
+      :disabled="!actionsEnabled"
       @click="goBackward10Seconds"
       outlined
       text
     >
       <v-icon>mdi-rewind-10</v-icon>
     </v-btn>
+    <v-btn :disabled="!actionsEnabled" text outlined @click="togglePlay">
+      <v-icon v-if="!isPlaying">mdi-play</v-icon>
+      <v-icon v-else>mdi-pause</v-icon>
+    </v-btn>
     <v-btn
-      :disabled="!isPlayEnabled"
-      @click="togglePlayTrack"
+      :disabled="!actionsEnabled"
+      @click="goForward10Seconds"
       outlined
       text
-      v-if="!isPlaying"
     >
-      <v-icon>mdi-play</v-icon>
-    </v-btn>
-    <v-btn v-if="isPlaying" text outlined @click="togglePlayTrack">
-      <v-icon>mdi-pause</v-icon>
-    </v-btn>
-    <v-btn text outlined :disabled="!isPlayEnabled" @click="goForward10Seconds">
       <v-icon>mdi-fast-forward-10</v-icon>
     </v-btn>
   </v-card-actions>

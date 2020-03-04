@@ -17,9 +17,9 @@ export default {
   data() {
     return {
       isPlaying: false,
+      actionsEnabled: false,
       currentTrack: TRACK_INFO,
-      currentTime: '00:00',
-      sliderTime: 0,
+      currentTimeInSeconds: 0,
       duration: 0,
     };
   },
@@ -33,6 +33,7 @@ export default {
       }
       return 'YOU ARE PLAYING';
     },
+
     /**
      * Return the song information (artist - album) if is possible
      */
@@ -42,128 +43,77 @@ export default {
       }
       return '';
     },
-    /**
-     * Return true if the current trac info allow user to play something, else false.
-     */
-    isPlayEnabled() {
-      return this.currentTrack.previewUrl;
-    },
-  },
-  mounted() {
-    this.$root.$on(MESSAGE_PLAY_TRACK, this.setPlayTrack);
-    this.$refs.player.addEventListener('play', this.onReproductionStart);
-    this.$refs.player.addEventListener('pause', this.onReproductionPause);
-    this.$refs.player.addEventListener('ended', this.onReproductionEnds);
-    this.$refs.player.addEventListener('canplay', this.onTrackReady);
-    this.$refs.player.addEventListener('timeupdate', this.timeUpdate);
-    window.audio1 = this.$refs.player;
-  },
-  methods: {
-    /**
-     * Modify component's current play track.
-     * @param {trackInfo} track track information.
-     */
-    setPlayTrack(track) {
-      if (track.trackId !== this.currentTrack.trackId) {
-        this.pause();
-        this.isPlaying = false;
-        this.currentTrack = track;
-        this.mustPlay = true;
-      }
+
+    currentTime() {
+      return dateTimeToPlayTime(this.currentTimeInSeconds);
     },
 
-    /**
-     * Execute proper actions when the reproduction ends.
-     */
+    sliderTime() {
+      return this.currentTimeInSeconds * UPDATE_INTERVAL;
+    },
+  },
+  methods: {
+    setCurrentTrack(track) {
+      if (track.trackId === this.currentTrack.trackId) {
+        return;
+      }
+      this.stop();
+      this.currentTrack = track;
+    },
+
+    play() {
+      this.$refs.player.play();
+    },
+    pause() {
+      this.$refs.player.pause();
+    },
+    stop() {
+      this.$refs.player.currentTime = 0;
+      this.$refs.player.pause();
+    },
+    togglePlay() {
+      if (this.isPlaying) {
+        this.pause();
+      } else {
+        this.play();
+      }
+    },
+    goBackward10Seconds() {
+      this.$refs.player.currentTime = this.$refs.player.currentTime - TIME_OFFSET_10;
+    },
+    goForward10Seconds() {
+      this.$refs.player.currentTime = this.$refs.player.currentTime + TIME_OFFSET_10;
+    },
+    onLoad() {
+      if (this.$refs.player.readyState >= 2) {
+        this.loaded = true;
+        this.duration = this.$refs.player.duration * UPDATE_INTERVAL;
+        this.actionsEnabled = true;
+        this.play();
+        return (this.playing = this.autoPlay);
+      }
+      this.actionsEnabled = false;
+      throw new Error('Failed to load sound file.');
+    },
+    onTimeUpdate() {
+      this.currentTimeInSeconds = this.$refs.player.currentTime;
+    },
     onReproductionStart() {
       this.isPlaying = true;
     },
-
-    /**
-     * Execute proper actions when the reproduction ends.
-     */
-    onReproductionEnds() {
-      this.isPlaying = false;
-      this.clearUpdateTimer();
-      this.sliderTime = 0;
-      this.currentTime = '00:00';
-    },
-
-    /**
-     * Execute proper actions when the track is paused.
-     */
     onReproductionPause() {
       this.isPlaying = false;
     },
-
-    /**
-     * Execute proper actions when the track is loaded.
-     */
-    onTrackReady() {
-      this.updateVisibleTrackInfo();
-      if (this.mustPlay) {
-        this.mustPlay = false;
-        this.togglePlayTrack();
-      }
+    onReproductionEnds() {
+      this.pause();
     },
-
-    /**
-     *Modify relevant information according current track.
-     */
-    updateVisibleTrackInfo() {
-      this.duration = this.$refs.player.duration * UPDATE_INTERVAL;
-      this.sliderTime = 0;
-    },
-
-    /**
-     * Change the current play status
-     */
-    togglePlayTrack() {
-      if (!this.isPlaying) {
-        this.play();
-      } else {
-        this.pause();
-      }
-    },
-
-    /**
-     * Pause the current reproduction if is possible.
-     */
-    pause() {
-      if (this.isPlaying && this.$refs.player) {
-        this.$refs.player.pause();
-      }
-    },
-
-    /**
-     * Play the current track if is possible.
-     */
-    play() {
-      if (!this.isPlaying && this.$refs.player) {
-        this.$refs.player.play();
-      }
-    },
-
-    /**
-     * Action to be executed on time update
-     */
-    timeUpdate(event) {
-      this.currentTime = dateTimeToPlayTime(event.target.currentTime);
-      this.sliderTime = this.$refs.player.currentTime * UPDATE_INTERVAL;
-    },
-
-    /**
-     * Go backward 10 seconds on the song.
-     */
-    goBackward10Seconds() {
-      this.$refs.player.currentTime = Math.round(this.$refs.player.currentTime) - TIME_OFFSET_10;
-    },
-
-    /**
-     * Go backward 10 seconds on the song.
-     */
-    goForward10Seconds() {
-      this.$refs.player.currentTime = Math.round(this.$refs.player.currentTime) + TIME_OFFSET_10;
-    },
+  },
+  mounted() {
+    this.$root.$on(MESSAGE_PLAY_TRACK, this.setCurrentTrack);
+    this.$refs.player.addEventListener('loadeddata', this.onLoad);
+    this.$refs.player.addEventListener('timeupdate', this.onTimeUpdate);
+    this.$refs.player.addEventListener('play', this.onReproductionStart);
+    this.$refs.player.addEventListener('pause', this.onReproductionPause);
+    this.$refs.player.addEventListener('ended', this.onReproductionEnds);
   },
 };
